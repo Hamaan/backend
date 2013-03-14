@@ -11,14 +11,7 @@
 	</p>
 	
 	<select name="menu" size="1">
-		<option value="none">...</option>
-		<?php
-			$zones = file("res/zones.txt");
-			foreach($zones as $k => $v) {
- 				$select .= "<option value='$k'>".$v."</option>\n";
-			}
-			echo $select;
-		?>
+		<option selected="selected" value="none">...</option>
 	</select>
 	
 	<p>
