@@ -59,7 +59,7 @@
     else {
        	include ("content.html");
     }
-    print "<br> Значение переменной action:". $action;
+    //print "<br> Значение переменной action:". $action;
 
    print "\n";
 

@@ -1,1 +1,50 @@
-<div>This is content.html</div>
+<div class="contents">
+	<h2>Добро пожаловать в административный модуль!</h2> <br>
+	
+	<?php
+		//$JsonString = file_get_contents("res/zones.jsn");
+		//$JsonString = file_get_contents("res/test.json") ;
+		//$obj=json_decode($JsonString);
+		//foreach($obj->contents->zoneName as $val)
+  		//	echo $val;
+		//echo $obj->office[1];
+
+	$jsonString1 = file_get_contents("res/zones.jsn");
+$cart1 = json_decode( $jsonString1 );
+$i = 1;
+
+while ($i <= $cart1->contents[$i]->zoneID) {
+	echo $cart1->contents[$i]->zoneName . "<br>";
+	$i++;
+}
+
+echo $cart1->ZoneSet . "<br>";
+echo $cart1->contents[3]->zoneName . "<br>";
+
+		$jsonString = '
+{                                           
+  "orderID": 12345,                         
+  "shopperName": "John Smith",              
+  "shopperEmail": "johnsmith@example.com",  
+  "contents": [                             
+    {                                       
+      "productID": 34,                      
+      "productName": "SuperWidget",         
+      "quantity": 1                        
+    },                                      
+    {                                       
+      "productID": 56,                      
+      "productName": "WonderWidget",        
+      "quantity": 3                         
+    }                                       
+  ],                                        
+  "orderCompleted": true                    
+}                                           
+';
+
+$cart = json_decode( $jsonString );
+echo $cart->shopperEmail . "<br>";
+echo $cart->contents[1]->productName . "<br>";
+	?>
+
+</div>
