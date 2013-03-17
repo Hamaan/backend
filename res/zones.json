@@ -31,9 +31,60 @@
          },
          {
             "zoneID": 8,
-            "zoneName": "Ялта"
+            "zoneName": "Ялта",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "Алупка"
+               },
+               {
+                  "townID": 2,
+                  "townName": "Гаспра"
+               },
+               {
+                  "townID": 3,
+                  "townName": "Гурзуф"
+               },
+               {
+                  "townID": 4,
+                  "townName": "Кацивели"
+               },
+               {
+                  "townID": 5,
+                  "townName": "Ливадия"
+               },
+               {
+                  "townID": 6,
+                  "townName": "Массандра"
+               },
+               {
+                  "townID": 7,
+                  "townName": "Никита"
+               },
+               {
+                  "townID": 8,
+                  "townName": "Ореанда"
+               },
+               {
+                  "townID": 9,
+                  "townName": "Симеиз"
+               },
+               {
+                  "townID": 10,
+                  "townName": "Форос"
+               }
+            ]
          }
    ]
 }
 
-
+   
+   
+   
+   
+   
+   
+   
+   
+   
+      

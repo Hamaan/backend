@@ -13,7 +13,7 @@
 
 			switch ($menu_type) {
 				case "rollout" :
-					echo "<p>\n<select name=\"$menu_name\" size=\"1\">\n<option value=\"none\">...</option>\n";	
+					echo "<p>\n<select name=\"$menu_name\" id=\"$menu_name\" size=\"1\">\n<option value=\"none\">...</option>\n";	
 					for ($i=0; $i < $line; $i++) { 
 						echo "<option value='".$i."'>".$menu_array->Contents[$i]->$item_name . "</option>\n";
 						//echo $menu_array->Contents[$i]->$item_name . "<br>";
@@ -66,6 +66,18 @@
 				menu_create ("checkbox","rt","RoomTypeName","res/rooms.json","0");
 		?>
 			
+		<p>
+			<select name="TownSelect" id="TownSelect" size="1">
+			<option value="none">...</option>
+			</select>
+			<small>Населённый пункт</small>
+		</p>
+
+		<script type="text/javascript">
+			$("#ZoneSelect").change(function(){
+				$("#TownSelect").load("./handler.php", { id: $("#ZoneSelect option:selected").val() });
+			});
+		</script> 
 		
 		<p>
 			<input type="text" name="lacation" id="location" value="" size="25" />
