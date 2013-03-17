@@ -1,5 +1,5 @@
 <?php 
-	function menu_create ($menu_type, $menu_name, $item_name, $file_name, $hint) 
+	function menu_create ($menu_type, $menu_name, $item_id, $item_name, $file_name, $hint) 
 	/*
 	При указании в качестве переменной $hint любого числа, комментарий печататься не будет.
 	$menu_type = checkbox - чекбокс
@@ -9,21 +9,19 @@
 		{
 			$jsonString = file_get_contents($file_name);
 			$menu_array = json_decode($jsonString);
-			$line = count($menu_array->Contents);
 
 			switch ($menu_type) {
 				case "rollout" :
-					echo "<p>\n<select name=\"$menu_name\" id=\"$menu_name\" size=\"1\">\n<option value=\"none\">...</option>\n";	
-					for ($i=0; $i < $line; $i++) { 
-						echo "<option value='".$i."'>".$menu_array->Contents[$i]->$item_name . "</option>\n";
-						//echo $menu_array->Contents[$i]->$item_name . "<br>";
+					echo "<p>\n<select name=\"$menu_name\" id=\"$menu_name\" size=\"1\">\n<option value=\"none\">...</option>\n";
+					foreach ($menu_array->Contents as $Contents) {
+						echo "<option value='".$Contents->$item_id."'>".$Contents->$item_name."</option>\n";
 					}
 					echo "</select>\n";
 					break;
 				case "checkbox" :
 					echo "<p>\n";
-					for ($i=0; $i < $line; $i++) {
-						echo "<input type=\"checkbox\" name=\"$menu_name".$i."\" value='$k'>".$menu_array->Contents[$i]->$item_name."<br>\n";
+					foreach ($menu_array->Contents as $Contents) {
+						echo "<input type=\"checkbox\" name=\"$menu_name".$Contents->$item_id."\" value='$k'>".$Contents->$item_name."<br>\n";
 					}
 					break;
 				case "radio" :
@@ -53,17 +51,17 @@
 		</p>
 
 		<?php
-				menu_create ("rollout","HotelType","HotelTypeName","res/hotel_type.json","Тип отеля");
-				menu_create ("rollout","ZoneSelect","zoneName","res/zones.json","Зона побережья"); 
+				menu_create ("rollout","HotelType","HotelTypeID","HotelTypeName","res/hotel_type.json","Тип отеля");
+				menu_create ("rollout","ZoneSelect","zoneID","zoneName","res/zones.json","Зона побережья"); 
 
 				echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
 
-				menu_create ("rollout","StartMonth","MonthName","res/monthes.json","0");
+				menu_create ("rollout","StartMonth","MonthNumber","MonthName","res/monthes.json","0");
 
 				echo "<small>По:</small>\n";
 
-				menu_create ("rollout","EndMonth","MonthName","res/monthes.json","0");
-				menu_create ("checkbox","rt","RoomTypeName","res/rooms.json","0");
+				menu_create ("rollout","EndMonth","MonthNumber","MonthName","res/monthes.json","0");
+				menu_create ("checkbox","rt","RoomTypeID","RoomTypeName","res/rooms.json","0");
 		?>
 			
 		<p>

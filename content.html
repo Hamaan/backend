@@ -2,13 +2,7 @@
 	<h2>Добро пожаловать в административный модуль!</h2> <br>
 	
 	<?php
-		//$JsonString = file_get_contents("res/zones.jsn");
-		//$JsonString = file_get_contents("res/test.json") ;
-		//$obj=json_decode($JsonString);
-		//foreach($obj->contents->zoneName as $val)
-  		//	echo $val;
-		//echo $obj->office[1];
-
+		
 		function menu_create ($item_name, $file_name)
 		{
 			$jsonString = file_get_contents($file_name);
@@ -19,22 +13,21 @@
 			}
 		}
 
-		menu_create ("zoneName","res/zones.json");
+		//menu_create ("zoneName","res/zones.json");
 
+		$values = array();
 		$jsonString = file_get_contents("res/zones.json");
 		$select_array = json_decode($jsonString);
+		foreach ($select_array->Contents as $Contents) {
+			if ($Contents->zoneID == 8) {
+				foreach ($Contents->zoneTown as $zoneTown) {
+					//echo $zoneTown->townName;
+					$values[] = $zoneTown->townName;	
+				}
+			}
+		}
+		print_r($values);
 
-		$line = count($select_array->Contents[7]->zoneTown);
-		echo $line;
-		
-
-//		$jsonString1 = file_get_contents("res/zones.json");
-//		$cart1 = json_decode( $jsonString1 );
-
-//		$line = count($cart1->Contents);
-//		for ($i=0; $i < $line; $i++) { 
-//			echo $cart1->Contents[$i]->zoneName . "<br>";
-//		}
 	?>
 
 </div>
