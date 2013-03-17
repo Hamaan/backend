@@ -1,0 +1,39 @@
+{
+   "ZoneSet": "Крым",
+   "Contents": [
+         {
+            "zoneID": 1,
+            "zoneName": "Алушта"
+         },
+         {
+            "zoneID": 2,
+            "zoneName": "Джанкой"
+         },
+         {
+            "zoneID": 3,
+            "zoneName": "Евпатория"
+         },
+         {
+            "zoneID": 4,
+            "zoneName": "Керчь"
+         },
+         {
+            "zoneID": 5,
+            "zoneName": "Севастополь"
+         },
+         {
+            "zoneID": 6,
+            "zoneName": "Судак"
+         },
+         {
+            "zoneID": 7,
+            "zoneName": "Феодосия"
+         },
+         {
+            "zoneID": 8,
+            "zoneName": "Ялта"
+         }
+   ]
+}
+
+

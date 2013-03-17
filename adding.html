@@ -1,4 +1,48 @@
+<?php 
+	function menu_create ($menu_type, $menu_name, $item_name, $file_name, $hint) 
+	/*
+	При указании в качестве переменной $hint любого числа, комментарий печататься не будет.
+	$menu_type = checkbox - чекбокс
+	$menu_type = rollout - выпадающий список
+	$menu_type = radio - радиокнопка
+	*/
+		{
+			$jsonString = file_get_contents($file_name);
+			$menu_array = json_decode($jsonString);
+			$line = count($menu_array->Contents);
 
+			switch ($menu_type) {
+				case "rollout" :
+					echo "<p>\n<select name=\"$menu_name\" size=\"1\">\n<option value=\"none\">...</option>\n";	
+					for ($i=0; $i < $line; $i++) { 
+						echo "<option value='".$i."'>".$menu_array->Contents[$i]->$item_name . "</option>\n";
+						//echo $menu_array->Contents[$i]->$item_name . "<br>";
+					}
+					echo "</select>\n";
+					break;
+				case "checkbox" :
+					echo "<p>\n";
+					for ($i=0; $i < $line; $i++) {
+						echo "<input type=\"checkbox\" name=\"$menu_name".$i."\" value='$k'>".$menu_array->Contents[$i]->$item_name."<br>\n";
+					}
+					break;
+				case "radio" :
+					# code...
+					break;
+			}
+
+			if (is_numeric($hint)) {
+					echo "</p>\n\n";
+			}
+			else {
+					echo "<small>$hint</small>\n";
+					echo "</p>\n\n";
+			}
+						
+		}
+
+
+?>
 <div class="contents">
 	<h2>Добавление нового объекта</h2> <br>
 	<small>*Все поля являются обязательными для заполнения.</small>
@@ -8,72 +52,24 @@
 			<small> Название</small>
 		</p>
 
-		<p>
-			<select name="HotelType" size="1">
-				<option value="none">...</option>
-				<?php
-					$hotel_type = file("res/hotel_type.txt");
-					foreach($hotel_type as $k => $v) {
-	 					$select_type .= "<option value='$k'>".$v."</option>\n";
-					}
-					echo $select_type;
-				?>
-			</select>
-			<small> Тип отеля</small>
-		</p>
+		<?php
+				menu_create ("rollout","HotelType","HotelTypeName","res/hotel_type.json","Тип отеля");
+				menu_create ("rollout","ZoneSelect","zoneName","res/zones.json","Зона побережья"); 
 
-		<p>
-			<select name="ZoneSelect" size="1">
-				<option value="none">...</option>
-				<?php
-					$zone_type = file("res/zones.txt");
-					foreach($zone_type as $k => $v) {
- 						$select_zone .= "<option value='$k'>".$v."</option>\n";
-					}
-					echo $select_zone;
-				?>
-			</select>
-			<small> Зона побережья.</small>
-		</p>
-	
-		<p>
-			<small> Период работы.</small><br>
-			<small> C:</small>
-			<select name="StartMonth" size="1">
-				<option value="none">...</option>
-				<?php
-					$start_month = file("res/monthes.txt");
-					foreach($start_month as $k => $v) {
- 						$select_start_month .= "<option value='$k'>".$v."</option>\n";
-					}
-					echo $select_start_month;
-				?>
-			</select>
-			<small> По:</small>
-			<select name="EndMonth" size="1">
-				<option value="none">...</option>
-				<?php
-					$end_month = file("res/monthes.txt");
-					foreach($end_month as $k => $v) {
- 						$select_end_month .= "<option value='$k'>".$v."</option>\n";
-					}
-					echo $select_end_month;
-				?>
-			</select>
-		</p>
+				echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
 
-		<p>
-			<?php
-				$room_type = file("res/rooms.txt");
-				foreach($room_type as $k => $v) {
-					$select_room_type .="<input type=\"checkbox\" name=\"rt'$k'\" value='$k'>".$v."<br>";
-				}
-				echo $select_room_type;
-			?>
-		</p>
+				menu_create ("rollout","StartMonth","MonthName","res/monthes.json","0");
 
+				echo "<small>По:</small>\n";
+
+				menu_create ("rollout","EndMonth","MonthName","res/monthes.json","0");
+				menu_create ("checkbox","rt","RoomTypeName","res/rooms.json","0");
+		?>
+			
+		
 		<p>
-			<input type="text" name="email" id="email" value="" size="25" />
+			<input type="text" name="lacation" id="location" value="" size="25" />
+			<small>Расположение  (например "в центре города, недалеко от рынка")</small>
 		</p>
 
 		<p>

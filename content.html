@@ -9,13 +9,25 @@
   		//	echo $val;
 		//echo $obj->office[1];
 
-		$jsonString1 = file_get_contents("res/zones.jsn");
-		$cart1 = json_decode( $jsonString1 );
-
-		$line = count($cart1->contents);
-		for ($i=0; $i < $line; $i++) { 
-			echo $cart1->contents[$i]->zoneName . "<br>";
+		function menu_create ($item_name, $file_name)
+		{
+			$jsonString = file_get_contents($file_name);
+			$menu_array = json_decode($jsonString);
+			$line = count($menu_array->Contents);
+			for ($i=0; $i < $line; $i++) { 
+				echo $menu_array->Contents[$i]->$item_name . "<br>";
+			}
 		}
+
+		menu_create ("zoneName","res/zones.json");
+
+//		$jsonString1 = file_get_contents("res/zones.json");
+//		$cart1 = json_decode( $jsonString1 );
+
+//		$line = count($cart1->Contents);
+//		for ($i=0; $i < $line; $i++) { 
+//			echo $cart1->Contents[$i]->zoneName . "<br>";
+//		}
 	?>
 
 </div>
