@@ -21,6 +21,13 @@
 
 		menu_create ("zoneName","res/zones.json");
 
+		$jsonString = file_get_contents("res/zones.json");
+		$select_array = json_decode($jsonString);
+
+		$line = count($select_array->Contents[7]->zoneTown);
+		echo $line;
+		
+
 //		$jsonString1 = file_get_contents("res/zones.json");
 //		$cart1 = json_decode( $jsonString1 );
 
