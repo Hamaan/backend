@@ -21,11 +21,14 @@
 				case "checkbox" :
 					echo "<p>\n";
 					foreach ($menu_array->Contents as $Contents) {
-						echo "<input type=\"checkbox\" name=\"$menu_name".$Contents->$item_id."\" value='$k'>".$Contents->$item_name."<br>\n";
+						echo "<input type=\"checkbox\" name=\"$menu_name".$Contents->$item_id."\" value='".$Contents->$item_id."'>".$Contents->$item_name."<br>\n";
 					}
 					break;
 				case "radio" :
-					# code...
+					echo "<p>\n";
+					foreach ($menu_array->Contents as $Contents) {
+						echo "<input type=\"radio\" name=\"$menu_name\" value=\"".$Contents->$item_id."\">".$Contents->$item_name."<br>\n";
+					}
 					break;
 			}
 
@@ -44,7 +47,7 @@
 <div class="contents">
 	<h2>Добавление нового объекта</h2> <br>
 	<small>*Все поля являются обязательными для заполнения.</small>
-	<form action="add_object.php" method="post" name="new_hotel">
+	<form action="admin_index.php?action=add_object" enctype="multipart/form-data" method="post" name="new_hotel">
 		<p>
 			<input type="text" name="hotel_name" id="hotel_name" value="" size="25" />
 			<small> Название</small>
@@ -62,6 +65,10 @@
 	<small>Населённый пункт</small>
 </p>
 
+<p>
+	<input type="text" name="location" id="location" value="" size="25" />
+	<small>Расположение  (например "в центре города, недалеко от рынка")</small>
+</p>
 		<?php
 
 				echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
@@ -71,26 +78,65 @@
 				echo "<small>По:</small>\n";
 
 				menu_create ("rollout","EndMonth","MonthNumber","MonthName","res/monthes.json","0");
+
+				echo "<small>Классы номеров (выбрать всё, что подходит):</small>\n";
 				menu_create ("checkbox","rt","RoomTypeID","RoomTypeName","res/rooms.json","0");
+
+				echo "<small>Дополнительная инфраструктура (выбрать всё, что подходит):</small>\n";
+				menu_create ("checkbox","infr","InfraID","InfraName","res/infrastructure.json","0");
+
+				echo "<small>Питание на выбор (выбрать всё, что подходит):</small>\n";
+				menu_create ("checkbox","meal","MealID","MealName","res/meal.json","0");
+
+				echo "<small>Тип пляжа:</small>\n";
+				menu_create ("radio","beach","BeachID","BeachName","res/beach.json","0");		
 		?>
 
-		<p>
-			<input type="text" name="lacation" id="location" value="" size="25" />
-			<small>Расположение  (например "в центре города, недалеко от рынка")</small>
-		</p>
+<p>
+	<input type="text" name="address" id="address" value="" size="25" />
+	<small>Адрес</small>
+</p>
 
-		<p>
-			<input type="text" name="email" id="email" value="" size="25" />
-		</p>
+<p>
+	<input type="text" name="email" id="email" value="" size="25" />
+	<small>E-mail</small>
+</p>
+<p>
+	<input type="text" name="phone" id="phone" value="" size="25" />
+	<small>Телефон</small>
+</p>
+<p>
+	<input type="text" name="skype" id="skype" value="" size="15" />
+	<small>Skype</small>
+</p>
+<p>
+	<input type="text" name="homepage" id="skype" value="" size="25" />
+	<small>Сайт</small>
+</p>
+<p>
+	<input type="text" name="gps" id="gps" value="" size="25" />
+	<small>GPS</small>
+</p>
 
-		<p>
-			<small> Краткое описание</small> <br>
-			<textarea name="comment" id="comment" cols="48" rows="8"> </textarea>
-		</p>
+<p>
+	<small>Краткое описание:</small> <br>
+	<textarea name="comment" id="comment" cols="48" rows="8"> </textarea>
+</p>
+<p>
+	<small>Фотографии объекта:</small> <br>
+	<input name="picture1" type="file" />
+</p>
+<p>
+	<input name="picture2" type="file" />
+</p>
+<p>
+	<input name="picture3" type="file" />
+</p>
 
-		<p>
-			<input type="submit" value="Отправить">
-		</p>
-	</form>
+
+<p>
+	<input type="submit" value="Отправить">
+</p>
+</form>
 
 </div>

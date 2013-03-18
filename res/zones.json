@@ -4,6 +4,8 @@
          {
             "zoneID": 1,
             "zoneName": "Алушта",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -18,6 +20,8 @@
          {
             "zoneID": 2,
             "zoneName": "Джанкой",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -32,6 +36,8 @@
          {
             "zoneID": 3,
             "zoneName": "Евпатория",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -46,6 +52,8 @@
          {
             "zoneID": 4,
             "zoneName": "Керчь",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -60,6 +68,8 @@
          {
             "zoneID": 5,
             "zoneName": "Севастополь",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -74,6 +84,8 @@
          {
             "zoneID": 6,
             "zoneName": "Судак",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -88,6 +100,8 @@
          {
             "zoneID": 7,
             "zoneName": "Феодосия",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,
@@ -102,6 +116,8 @@
          {
             "zoneID": 8,
             "zoneName": "Ялта",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
             "zoneTown":  [
                {
                   "townID": 1,

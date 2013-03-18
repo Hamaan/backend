@@ -57,8 +57,11 @@
     elseif ($action == "delete") {
     	include ("delete.html");
     }
+    elseif ($action == "add_object"){
+       	include ("add_object.php");
+    }
     else {
-       	include ("content.html");
+    	include ("content.html");
     }
     //print "<br> Значение переменной action:". $action;
 

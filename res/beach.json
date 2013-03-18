@@ -1,0 +1,25 @@
+{
+	"BeachSet": "Тип пляжа",
+	"Contents": [
+		{
+			"BeachID": 1,
+			"BeachName": "галечный"
+		},
+		{
+			"BeachID": 2,
+			"BeachName": "песчаный"
+		},
+		{
+			"BeachID": 3,
+			"BeachName": "песчано-галечный"
+		},
+		{
+			"BeachID": 4,
+			"BeachName": "камни"
+		}
+	]
+}
+
+    
+    
+    
