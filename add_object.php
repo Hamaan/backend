@@ -7,6 +7,17 @@
 		} 
 	}
 
+//$JsonString = json_encode($_POST);
+//echo $JsonString;
+
+$JsonString = preg_replace_callback(
+    '/\\\u([0-9a-fA-F]{4})/',
+    create_function('$match', 'return mb_convert_encoding("&#" . intval($match[1], 16) . ";", "UTF-8", "HTML-ENTITIES");'),
+    json_encode($_POST)
+);
+
+echo $JsonString;
+
 echo "адрес эл. почты:" .$_POST["email"]."</br>";
 echo "телефон:" .$_POST["phone"]."</br>";
 echo "скайп:" .$_POST["skype"]."</br>";
