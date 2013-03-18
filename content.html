@@ -19,15 +19,58 @@
 		$jsonString = file_get_contents("res/zones.json");
 		$select_array = json_decode($jsonString);
 		foreach ($select_array->Contents as $Contents) {
-			if ($Contents->zoneID == 8) {
+			if ($Contents->zoneID == $i) {
 				foreach ($Contents->zoneTown as $zoneTown) {
 					//echo $zoneTown->townName;
 					$values[] = $zoneTown->townName;	
 				}
 			}
 		}
-		print_r($values);
-
+		//print_r($values);
 	?>
 
+
+<?php /*
+    // Выбираем из БД все квртиры
+    $query = mysql_query("SELECT * FROM таблица_с_квартирами");
+    
+    $options = '<option value="0">Выберите</option>';
+    
+    // В цикле формируем список
+    while( $resilt = mysql_fetch_assoc( $query ) )
+    {
+        $options .= '<option value="'.$resilt['id_kv'].'">Квартира №'.$resilt['id_kv'].'</option>';
+    }
+*/?>
+    <!--Это список зон-->
+    <p>
+		<select name="ZoneSelect" id="ZoneSelect" size="1">
+			<option value="0">...</option>
+			<option value='1'>Алушта</option>
+			<option value='2'>Джанкой</option>
+			<option value='3'>Евпатория</option>
+			<option value='4'>Керчь</option>
+			<option value='5'>Севастополь</option>
+			<option value='6'>Судак</option>
+			<option value='7'>Феодосия</option>
+			<option value='8'>Ялта</option>
+		</select>
+		<small>Зона побережья</small>
+	</p>
+    <!--/Это список зон-->
+    <!--Тут будет загружаться список городов -->
+    <select disabled="disabled" name="TownSelect" id="TownSelect" size="1">
+        <option>Выберите зону</option>
+    </select>
+    <!--/Тут будет загружаться список городов -->
+
+    <!--Тут будет информация о квартире-->
+    <div id="info_kv">
+    </div>
+    <!--Тут будет информация о квартире-->
+    <!--Тут будет информация о жильце-->
+    <div id="info_gilec">
+    </div>
+    <!--/Тут будет информация о жильце-->
+ 
 </div>

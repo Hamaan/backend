@@ -3,31 +3,101 @@
    "Contents": [
          {
             "zoneID": 1,
-            "zoneName": "Алушта"
+            "zoneName": "Алушта",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "111"
+               },
+               {
+                  "townID": 2,
+                  "townName": "111"
+               }
+            ]
          },
          {
             "zoneID": 2,
-            "zoneName": "Джанкой"
+            "zoneName": "Джанкой",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "222"
+               },
+               {
+                  "townID": 2,
+                  "townName": "222"
+               }
+            ]
          },
          {
             "zoneID": 3,
-            "zoneName": "Евпатория"
+            "zoneName": "Евпатория",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "333"
+               },
+               {
+                  "townID": 2,
+                  "townName": "333"
+               }
+            ]
          },
          {
             "zoneID": 4,
-            "zoneName": "Керчь"
+            "zoneName": "Керчь",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "444"
+               },
+               {
+                  "townID": 2,
+                  "townName": "444"
+               }
+            ]
          },
          {
             "zoneID": 5,
-            "zoneName": "Севастополь"
+            "zoneName": "Севастополь",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "555"
+               },
+               {
+                  "townID": 2,
+                  "townName": "555"
+               }
+            ]
          },
          {
             "zoneID": 6,
-            "zoneName": "Судак"
+            "zoneName": "Судак",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "666"
+               },
+               {
+                  "townID": 2,
+                  "townName": "666"
+               }
+            ]
          },
          {
             "zoneID": 7,
-            "zoneName": "Феодосия"
+            "zoneName": "Феодосия",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "777"
+               },
+               {
+                  "townID": 2,
+                  "townName": "777"
+               }
+            ]
          },
          {
             "zoneID": 8,

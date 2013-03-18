@@ -12,7 +12,7 @@
 
 			switch ($menu_type) {
 				case "rollout" :
-					echo "<p>\n<select name=\"$menu_name\" id=\"$menu_name\" size=\"1\">\n<option value=\"none\">...</option>\n";
+					echo "<p>\n<select name=\"$menu_name\" id=\"$menu_name\" size=\"1\">\n<option value='0'>...</option>\n";
 					foreach ($menu_array->Contents as $Contents) {
 						echo "<option value='".$Contents->$item_id."'>".$Contents->$item_name."</option>\n";
 					}
@@ -53,6 +53,16 @@
 		<?php
 				menu_create ("rollout","HotelType","HotelTypeID","HotelTypeName","res/hotel_type.json","Тип отеля");
 				menu_create ("rollout","ZoneSelect","zoneID","zoneName","res/zones.json","Зона побережья"); 
+		?>
+
+<p>
+	<select disabled="disabled" name="TownSelect" id="TownSelect" size="1">
+   		<option>Выберите зону</option>
+	</select>
+	<small>Населённый пункт</small>
+</p>
+
+		<?php
 
 				echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
 
@@ -63,20 +73,7 @@
 				menu_create ("rollout","EndMonth","MonthNumber","MonthName","res/monthes.json","0");
 				menu_create ("checkbox","rt","RoomTypeID","RoomTypeName","res/rooms.json","0");
 		?>
-			
-		<p>
-			<select name="TownSelect" id="TownSelect" size="1">
-			<option value="none">...</option>
-			</select>
-			<small>Населённый пункт</small>
-		</p>
 
-		<script type="text/javascript">
-			$("#ZoneSelect").change(function(){
-				$("#TownSelect").load("handler.php", { id: $("#ZoneSelect option:selected").val() });
-			});
-		</script> 
-		
 		<p>
 			<input type="text" name="lacation" id="location" value="" size="25" />
 			<small>Расположение  (например "в центре города, недалеко от рынка")</small>
