@@ -2,7 +2,7 @@
         function()
         {
             // При выборе квартиры
-            $("#ZoneSelect").change
+            $("#zoneID").change
             (
                 function()
                 {

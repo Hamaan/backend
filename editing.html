@@ -1,4 +1,53 @@
 
 <div class="contents">
 	<h2>Изменение существующего объекта</h2> <br>
+	
+
+	<?php
+//проверяем, передавалось ли нам директория, в которю входить.
+		if (!$_GET['dirname']) {
+			$dirname = "Crimea/"; //Если нет, то присваиваем значение по умолчанию.
+		}
+		else {
+			$dirname = $_GET['dirname'];
+		}
+//открываем индексный файл JSON, который лежи в каждой директории.
+		$JsonString = file_get_contents("$dirname"."index.json");	
+		$LinksArray = json_decode($JsonString);
+		$root_set = $LinksArray->settings;
+//формируем меню: текущее местоположение, список доступных директорий для перехода и, ниже, список отелей в данном населённом пункте.
+		echo "<p>\n";
+		echo "<small>Вы сейчас находитесь здесь:</small> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$LinksArray->settings[0]->parent[0]->url."\">".$LinksArray->settings[0]->parent[0]->name."</a> > ".$root_set[0]->name."<br>\n";
+		foreach ($LinksArray->data[0]->towns as $towns) {
+			echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n";
+		}
+		echo "<br>\n</p>\n";
+		echo "<p>\n<small>Список отелей в данном населенном пункте:</small> <br>";
+		foreach ($LinksArray->data[0]->hotels as $hotels) {
+			echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a><br>\n";
+		}
+		echo "</p>\n";
+
+		if ($_GET['object']) {
+			$object = $_GET['object'];
+			foreach ($LinksArray->data[0]->hotels as $hotels) {
+				if ($hotels->id == $object) {
+					# code...
+			
+			echo "<form action=\"admin_index.php?action=add_object\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
+			<p>\n
+			<input type=\"text\" name=\"HotelName\" id=\"HotelName\" value=\"".$hotels->name."\" size=\"25\" />
+			<small> Название</small>
+			</p>
+			<p>
+			<input type=\"submit\" value=\"Отправить\">
+			</p>
+			</form>
+			";
+				}
+			}
+		}
+
+	?>
+
 </div>

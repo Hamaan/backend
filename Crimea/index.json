@@ -1,0 +1,69 @@
+{
+   "DirName": "Крым",
+   "settings": [
+      {
+         "name": "Крым",
+         "nameEN":"Crimea",
+         "url": "Crimea/",
+         "parent": [
+            {
+               "name": "",
+               "url" : "/"
+            }
+         ],
+         "pics": ""
+      }
+   ],
+   "data": [
+      {
+         "towns" : [
+            {
+               "id": 1,
+               "name": "Алушта",
+               "url": "Alushta/"
+            },
+            {
+               "id": 2,
+               "name": "Джанкой",
+               "url": "Djankoy/"
+            },
+            {
+               "id": 3,
+               "name": "Евпатория",
+               "url": "Evpatoriya/"
+            },
+            {
+               "id": 4,
+               "name": "Керчь",
+               "url": "Kerch/"
+            },
+            {
+               "id": 5,
+               "name": "Севастополь",
+               "url": "Sevastopol/"
+            },
+            {
+               "id": 6,
+               "name": "Симферополь",
+               "url": "Simpheropol/"
+            },
+            {
+               "id": 7,
+               "name": "Судак",
+               "url": "Sudak/"
+            },
+            {
+               "id": 8,
+               "name": "Феодосия",
+               "url": "Feodosiya/"
+            },
+            {
+               "id": 9,
+               "name": "Ялта",
+               "url": "Yalta/"
+            }
+         ],
+         "hotels" : []
+      }
+   ]
+}

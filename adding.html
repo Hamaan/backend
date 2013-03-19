@@ -1,5 +1,5 @@
 <?php 
-	function menu_create ($menu_type, $menu_name, $item_id, $item_name, $file_name, $hint) 
+	function menu_create ($menu_type, $item_id, $item_name, $file_name, $hint) 
 	/*
 	При указании в качестве переменной $hint любого числа, комментарий печататься не будет.
 	$menu_type = checkbox - чекбокс
@@ -12,7 +12,7 @@
 
 			switch ($menu_type) {
 				case "rollout" :
-					echo "<p>\n<select name=\"$menu_name\" id=\"$menu_name\" size=\"1\">\n<option value='0'>...</option>\n";
+					echo "<p>\n<select name=\"$item_id\" id=\"$item_id\" size=\"1\">\n<option value='0'>...</option>\n";
 					foreach ($menu_array->Contents as $Contents) {
 						echo "<option value='".$Contents->$item_id."'>".$Contents->$item_name."</option>\n";
 					}
@@ -21,13 +21,13 @@
 				case "checkbox" :
 					echo "<p>\n";
 					foreach ($menu_array->Contents as $Contents) {
-						echo "<input type=\"checkbox\" name=\"$menu_name".$Contents->$item_id."\" value='".$Contents->$item_id."'>".$Contents->$item_name."<br>\n";
+						echo "<input type=\"checkbox\" name=\"$item_id\" value='".$Contents->$item_id."'>".$Contents->$item_name."<br>\n";
 					}
 					break;
 				case "radio" :
 					echo "<p>\n";
 					foreach ($menu_array->Contents as $Contents) {
-						echo "<input type=\"radio\" name=\"$menu_name\" value=\"".$Contents->$item_id."\">".$Contents->$item_name."<br>\n";
+						echo "<input type=\"radio\" name=\"$item_id\" value=\"".$Contents->$item_id."\">".$Contents->$item_name."<br>\n";
 					}
 					break;
 			}
@@ -49,13 +49,13 @@
 	<small>*Все поля являются обязательными для заполнения.</small>
 	<form action="admin_index.php?action=add_object" enctype="multipart/form-data" method="post" name="new_hotel">
 		<p>
-			<input type="text" name="hotel_name" id="hotel_name" value="" size="25" />
+			<input type="text" name="HotelName" id="HotelName" value="" size="25" />
 			<small> Название</small>
 		</p>
 
 		<?php
-				menu_create ("rollout","HotelType","HotelTypeID","HotelTypeName","res/hotel_type.json","Тип отеля");
-				menu_create ("rollout","ZoneSelect","zoneID","zoneName","res/zones.json","Зона побережья"); 
+				menu_create ("rollout","HotelTypeID","HotelTypeName","res/hotel_type.json","Тип отеля");
+				menu_create ("rollout","zoneID","zoneName","res/zones.json","Зона побережья"); 
 		?>
 
 <p>
@@ -73,23 +73,23 @@
 
 				echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
 
-				menu_create ("rollout","StartMonth","MonthNumber","MonthName","res/monthes.json","0");
+				menu_create ("rollout","MonthNumber","MonthName","res/monthes.json","0");
 
 				echo "<small>По:</small>\n";
 
-				menu_create ("rollout","EndMonth","MonthNumber","MonthName","res/monthes.json","0");
+				menu_create ("rollout","MonthNumber","MonthName","res/monthes.json","0");
 
 				echo "<small>Классы номеров (выбрать всё, что подходит):</small>\n";
-				menu_create ("checkbox","rt","RoomTypeID","RoomTypeName","res/rooms.json","0");
+				menu_create ("checkbox","RoomTypeID","RoomTypeName","res/rooms.json","0");
 
 				echo "<small>Дополнительная инфраструктура (выбрать всё, что подходит):</small>\n";
-				menu_create ("checkbox","infr","InfraID","InfraName","res/infrastructure.json","0");
+				menu_create ("checkbox","InfraID","InfraName","res/infrastructure.json","0");
 
 				echo "<small>Питание на выбор (выбрать всё, что подходит):</small>\n";
-				menu_create ("checkbox","meal","MealID","MealName","res/meal.json","0");
+				menu_create ("checkbox","MealID","MealName","res/meal.json","0");
 
 				echo "<small>Тип пляжа:</small>\n";
-				menu_create ("radio","beach","BeachID","BeachName","res/beach.json","0");		
+				menu_create ("radio","BeachID","BeachName","res/beach.json","0");		
 		?>
 
 <p>

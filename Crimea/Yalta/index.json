@@ -1,0 +1,79 @@
+{
+   "DirName" : "Ялта",
+   "settings" : [
+      {
+         "name" : "Ялта",
+         "nameEN" :"Yalta",
+         "url" : "Crimea/Yalta/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [
+            {
+               "id" : 1,
+               "name" : "Алупка",
+               "url": "Alupka/"
+            },
+            {
+               "id" : 2,
+               "name" : "Гаспра",
+               "url": "Gaspra/"
+            },
+            {
+               "id" : 3,
+               "name" : "Гурзуф",
+               "url": "Gurzuf/"
+            },
+            {
+               "id" : 4,
+               "name" : "Кацивели",
+               "url": "Katsiveli/"
+            },
+            {
+               "id" : 5,
+               "name" : "Ливадия",
+               "url": "Livadiya/"
+            },
+            {
+               "id" : 6,
+               "name" : "Массандра",
+               "url": "Massandra/"
+            },
+            {
+               "id" : 7,
+               "name" : "Никита",
+               "url": "Nikita/"
+            },
+            {
+               "id" : 8,
+               "name" : "Ореанда",
+               "url": "Oreanda/"
+            },
+            {
+               "id" : 9,
+               "name" : "Симеиз",
+               "url": "Simeiz/"
+            },
+            {
+               "id" : 10,
+               "name" : "Форос",
+               "url": "Foros/"
+            }
+         ],
+         "hotels" : [
+            {
+               "id" : 1,
+               "name" : "Империал"
+            }
+         ]
+      }
+   ]
+}

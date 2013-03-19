@@ -1,0 +1,32 @@
+{
+   "DirName" : "Форос",
+   "settings" : [
+      {
+         "name" : "Форос",
+         "nameEN" :"Foros",
+         "url" : "Crimea/Foros/",
+         "parent" : [
+            {
+               "name": "Ялта",
+               "url" : "Crimea/Yalta/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : [
+            {
+               "id" : 1,
+               "name" : "Империал"
+            },
+            {
+               "id" : 2,
+               "name" : "Колхозник Кубани"
+            }
+         ]
+      }
+   ]
+}
