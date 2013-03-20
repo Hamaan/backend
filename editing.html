@@ -23,7 +23,7 @@
 			echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n";
 		}
 		$newtown =$towns->id +1;
-		if (!$_GET['object']) {
+		if (!$_GET['object'] and !$_GET['addtown']) {
 			echo "<br>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$newtown."\">Добавить новый населённый пункт</a>\n<br>\n</p>\n";
 			echo "<p>\n<small>Список отелей в данном населенном пункте:</small> <br>";
 			foreach ($LinksArray->data[0]->hotels as $hotels) {
@@ -31,7 +31,8 @@
 			}
 			echo "</p>\n";
 		}
-		else {
+		
+		elseif ($_GET['object']) {
 			$object = $_GET['object'];
 			foreach ($LinksArray->data[0]->hotels as $hotels) {
 				if ($hotels->id == $object) {
@@ -51,6 +52,29 @@
 			";
 				}
 			}
+		}
+
+		elseif ($_GET['addtown']) {
+			$addtown = $_GET['addtown'];
+			echo "<br>\n</p>\n
+			<p>\n<small>Добавление нового населенного пункта:</small> <br>
+			<form action=\"admin_index.php?action=add_object\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
+			<input type=\"text\" name=\"id\" id=\"id\" value=\"".$addtown."\" size=\"3\" />
+			<small> ID</small>
+			<p>\n
+			<p>\n
+			<input type=\"text\" name=\"Name\" id=\"Name\" value=\"\" size=\"25\" />
+			<small> Название</small>
+			</p>
+			<p>\n
+			<input type=\"text\" name=\"url\" id=\"url\" value=\"\" size=\"25\" />
+			<small> url (будет создана директория с таким именем)</small>
+			</p>
+			<p>
+			<input type=\"submit\" value=\"Отправить\">
+			</p>
+			</form>
+			";
 		}
 
 	?>
