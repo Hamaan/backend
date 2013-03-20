@@ -1,0 +1,23 @@
+{
+   "DirName" : "Симферополь",
+   "settings" : [
+      {
+         "name" : "Симферополь",
+         "nameEN" :"Simpheropol",
+         "url" : "Crimea/Simpheropol/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

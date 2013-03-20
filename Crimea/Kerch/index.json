@@ -1,0 +1,23 @@
+{
+   "DirName" : "Керчь",
+   "settings" : [
+      {
+         "name" : "Керчь",
+         "nameEN" :"Kerch",
+         "url" : "Crimea/Kerch/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

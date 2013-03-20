@@ -1,0 +1,23 @@
+{
+   "DirName" : "Алушта",
+   "settings" : [
+      {
+         "name" : "Алушта",
+         "nameEN" :"Alushta",
+         "url" : "Crimea/Alushta/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

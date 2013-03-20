@@ -1,0 +1,23 @@
+{
+   "DirName" : "Судак",
+   "settings" : [
+      {
+         "name" : "Судак",
+         "nameEN" :"Sudak",
+         "url" : "Crimea/Sudak/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

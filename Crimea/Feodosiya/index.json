@@ -1,0 +1,23 @@
+{
+   "DirName" : "Феодосия",
+   "settings" : [
+      {
+         "name" : "Феодосия",
+         "nameEN" :"Feodosiya",
+         "url" : "Crimea/Feodosiya/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

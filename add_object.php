@@ -16,16 +16,17 @@ if ($_POST['type'] == "town") {
 	$index_array = json_decode($json_index_string);
 	$new_town = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => $_POST['url']."/");
 	
-	//создаём новую директорию
+//создаём новую директорию
 	$new_dir_path = $_GET['dirname'].$_POST['url']."/";
 	//echo "$new_dir_path";
 	mkdir("$new_dir_path");
 	echo "Директория ".$new_dir_path." создана успешно <br>";
-	$index_array->data[0]->towns[$_POST['id']] = $new_town;
+//дописываем в массив значений данные о новом объекте
+	array_push($index_array->data[0]->towns, $new_town);
 	$index_array = json_encode($index_array);
-	//print_r($index_array);
+//	print_r($index_array);
 	
-	//Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
+//Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
 	$index_file = fopen($_GET['dirname']."index.json", 'w');
 	fwrite($index_file, $index_array);
 	fclose($index_file);
@@ -65,8 +66,6 @@ if ($_POST['type'] == "town") {
 	$new_json->settings[0]->url = $new_dir_path;
 	$new_json->settings[0]->parent[0]->name = $_GET['parentname'];
 	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
-
-	//print_r($new_json);
 
 	$new_json = json_encode($new_json);
 

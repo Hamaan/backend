@@ -1,0 +1,23 @@
+{
+   "DirName" : "Севастополь",
+   "settings" : [
+      {
+         "name" : "Севастополь",
+         "nameEN" :"Sevastopol",
+         "url" : "Crimea/Sevastopol/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

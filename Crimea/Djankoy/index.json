@@ -1,0 +1,23 @@
+{
+   "DirName" : "Джанкой",
+   "settings" : [
+      {
+         "name" : "Джанкой",
+         "nameEN" :"Djankoy",
+         "url" : "Crimea/Djankoy/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

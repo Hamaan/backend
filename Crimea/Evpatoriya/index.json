@@ -1,0 +1,23 @@
+{
+   "DirName" : "Евпатория",
+   "settings" : [
+      {
+         "name" : "Евпатория",
+         "nameEN" :"Evpatoriya",
+         "url" : "Crimea/Evpatoriya/",
+         "parent" : [
+            {
+               "name": "Крым",
+               "url" : "Crimea/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}
