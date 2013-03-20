@@ -59,16 +59,17 @@
 			echo "<br>\n</p>\n
 			<p>\n<small>Добавление нового населенного пункта:</small> <br>
 			<form action=\"admin_index.php?action=add_object\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
-			<input type=\"text\" name=\"id\" id=\"id\" value=\"".$addtown."\" size=\"3\" />
+			<input type=\"text\" name=\"type\" value=\"town\" hidden size=\"1\">
+			<input type=\"text\" name=\"id\" value=\"".$addtown."\" size=\"3\" />
 			<small> ID</small>
-			<p>\n
-			<p>\n
-			<input type=\"text\" name=\"Name\" id=\"Name\" value=\"\" size=\"25\" />
+			<p>
+			<p>
+			<input type=\"text\" name=\"Name\" value=\"\" size=\"25\" />
 			<small> Название</small>
 			</p>
-			<p>\n
+			<p>
 			<input type=\"text\" name=\"url\" id=\"url\" value=\"\" size=\"25\" />
-			<small> url (будет создана директория с таким именем)</small>
+			<small> url (латинскими буквами, будет создана директория с таким именем)</small>
 			</p>
 			<p>
 			<input type=\"submit\" value=\"Отправить\">

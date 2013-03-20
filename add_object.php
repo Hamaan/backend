@@ -7,6 +7,16 @@
 		} 
 	}
 
+//print_r($_GET);
+//print_r($_POST);
+
+if ($_POST['type'] == "town") {
+	echo "New town! ";
+	print_r($_POST);
+	$new_town = json_encode($_POST);
+	print_r($new_town);
+}
+
 //преобразуем результат в строку JSON, заодно заменяя четырёхбайтные символы кириллицы читаемыми
 $JsonString = preg_replace_callback(
     '/\\\u([0-9a-fA-F]{4})/',
