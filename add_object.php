@@ -11,27 +11,78 @@
 //print_r($_POST);
 
 if ($_POST['type'] == "town") {
-	echo "New town! ";
-	print_r($_POST);
-	$new_town = json_encode($_POST);
-	print_r($new_town);
+
+	$json_index_string = file_get_contents($_GET['dirname']."index.json");
+	$index_array = json_decode($json_index_string);
+	$new_town = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => $_POST['url']."/");
+	
+	//создаём новую директорию
+	$new_dir_path = $_GET['dirname'].$_POST['url']."/";
+	//echo "$new_dir_path";
+	mkdir("$new_dir_path");
+	echo "Директория ".$new_dir_path." создана успешно <br>";
+	$index_array->data[0]->towns[$_POST['id']] = $new_town;
+	$index_array = json_encode($index_array);
+	//print_r($index_array);
+	
+	//Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
+	$index_file = fopen($_GET['dirname']."index.json", 'w');
+	fwrite($index_file, $index_array);
+	fclose($index_file);
+	echo "Запись в индексный файл внесена успешно <br>";
+
+	
+
+	$new_json = 
+'{
+   "DirName" : "",
+   "settings" : [
+      {
+         "name" : "",
+         "nameEN" :"",
+         "url" : "",
+         "parent" : [
+            {
+               "name": "",
+               "url" : ""
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}';
+	$new_json = json_decode($new_json);
+
+	$new_json->DirName = $_POST['Name'];
+	$new_json->settings[0]->name = $_POST['Name'];
+	$new_json->settings[0]->nameEN = $_POST['url'];
+	$new_json->settings[0]->url = $new_dir_path;
+	$new_json->settings[0]->parent[0]->name = $_GET['parentname'];
+	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
+
+	//print_r($new_json);
+
+	$new_json = json_encode($new_json);
+
+	//echo "новый json: ".$new_json;
+
+	$new_index_file = fopen($new_dir_path."index.json", 'x');
+	fwrite($new_index_file, $new_json);
+	fclose($new_index_file);
+
+	echo "Новый объект создан успешно.";
+
+
 }
 
-//преобразуем результат в строку JSON, заодно заменяя четырёхбайтные символы кириллицы читаемыми
-$JsonString = preg_replace_callback(
-    '/\\\u([0-9a-fA-F]{4})/',
-    create_function('$match', 'return mb_convert_encoding("&#" . intval($match[1], 16) . ";", "UTF-8", "HTML-ENTITIES");'),
-    json_encode($_POST)
-);
 
 /*
-echo "адрес эл. почты:" .$_POST["email"]."</br>";
-echo "телефон:" .$_POST["phone"]."</br>";
-echo "скайп:" .$_POST["skype"]."</br>";
-echo "сайт:" .$_POST["homepage"]."</br>";
-echo "координаты gps: " .$_POST["gps"]."</br>";
-*/
-
 $JsonSecondString = file_get_contents("res/zones.json");
 $path_array = json_decode($JsonSecondString);
 
@@ -77,6 +128,7 @@ if (!is_dir($root_path)){
 			echo "Загрузка файла ".$_FILES['picture1']['name']." завершена удачно.";
 		}
 	}
+*/
 
 ?>
 

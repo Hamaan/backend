@@ -58,7 +58,7 @@
 			$addtown = $_GET['addtown'];
 			echo "<br>\n</p>\n
 			<p>\n<small>Добавление нового населенного пункта:</small> <br>
-			<form action=\"admin_index.php?action=add_object\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
+			<form action=\"admin_index.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
 			<input type=\"text\" name=\"type\" value=\"town\" hidden size=\"1\">
 			<input type=\"text\" name=\"id\" value=\"".$addtown."\" size=\"3\" />
 			<small> ID</small>
