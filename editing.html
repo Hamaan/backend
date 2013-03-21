@@ -22,9 +22,10 @@
 		foreach ($LinksArray->data[0]->towns as $towns) {
 			echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n";
 		}
-		$newtown =$towns->id +1;
-		if (!$_GET['object'] and !$_GET['addtown']) {
-			echo "<br>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$newtown."\">Добавить новый населённый пункт</a>\n<br>\n</p>\n";
+		$newtown = $towns->id + 1;
+		$newhotel = $hotels->id + 1;
+		if (!$_GET['object'] and !$_GET['addtown'] and !$_GET['addhotel']) {
+			echo "<br>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$newtown."\">Добавить новый населённый пункт</a>\n <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addhotel=".$newhotel."\">Добавить новый отель</a>\n<br>\n</p>\n";
 			echo "<p>\n<small>Список отелей в данном населенном пункте:</small> <br>";
 			foreach ($LinksArray->data[0]->hotels as $hotels) {
 				echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a><br>\n";
@@ -76,6 +77,11 @@
 			</p>
 			</form>
 			";
+		}
+		elseif ($_GET['addhotel']) {
+			$addhotel = $_GET['addhotel'];
+			echo "<br>\n</p>\n
+			<p>\n<small>Добавление нового отеля:</small> </p><br>";
 		}
 
 	?>

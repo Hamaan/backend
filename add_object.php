@@ -7,9 +7,7 @@
 		} 
 	}
 
-//print_r($_GET);
-//print_r($_POST);
-
+//Добавление нового населённого пункта.
 if ($_POST['type'] == "town") {
 
 	$json_index_string = file_get_contents($_GET['dirname']."index.json");
@@ -19,8 +17,13 @@ if ($_POST['type'] == "town") {
 //создаём новую директорию
 	$new_dir_path = $_GET['dirname'].$_POST['url']."/";
 	//echo "$new_dir_path";
-	mkdir("$new_dir_path");
-	echo "Директория ".$new_dir_path." создана успешно <br>";
+	if (!is_dir($new_dir_path)) {
+		mkdir("$new_dir_path");
+		echo "Директория ".$new_dir_path." создана успешно <br>\n";
+	}
+	else {
+		echo "Директория ".$new_dir_path." существует, ничего создавать не нужно. <br>\n";
+	}
 //дописываем в массив значений данные о новом объекте
 	array_push($index_array->data[0]->towns, $new_town);
 	$index_array = json_encode($index_array);
@@ -33,44 +36,18 @@ if ($_POST['type'] == "town") {
 	echo "Запись в индексный файл внесена успешно <br>";
 
 	
-
-	$new_json = 
-'{
-   "DirName" : "",
-   "settings" : [
-      {
-         "name" : "",
-         "nameEN" :"",
-         "url" : "",
-         "parent" : [
-            {
-               "name": "",
-               "url" : ""
-            }
-         ],
-         "pics" : ""
-      }
-   ],
-   "data" : [
-      {
-         "towns" : [],
-         "hotels" : []
-      }
-   ]
-}';
+//Открываем файл-шаблон JSON.
+	$new_json = file_get_contents("Crimea/template.json");
 	$new_json = json_decode($new_json);
-
+//Запихиваем реальные значения.
 	$new_json->DirName = $_POST['Name'];
 	$new_json->settings[0]->name = $_POST['Name'];
 	$new_json->settings[0]->nameEN = $_POST['url'];
 	$new_json->settings[0]->url = $new_dir_path;
 	$new_json->settings[0]->parent[0]->name = $_GET['parentname'];
 	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
-
 	$new_json = json_encode($new_json);
-
-	//echo "новый json: ".$new_json;
-
+//Записываем получившуюся строку в файл с необходимым названием и местоположением.
 	$new_index_file = fopen($new_dir_path."index.json", 'x');
 	fwrite($new_index_file, $new_json);
 	fclose($new_index_file);
@@ -79,7 +56,10 @@ if ($_POST['type'] == "town") {
 
 
 }
-
+//Добавление нового отеля.
+elseif ($_POST['type'] == "hotel") {
+	# code...
+}
 
 /*
 $JsonSecondString = file_get_contents("res/zones.json");
