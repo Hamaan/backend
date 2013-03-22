@@ -4,6 +4,51 @@
 	
 
 	<?php
+
+function menu_create ($menu_type, $item_type, $file_name, $hint) 
+	/*
+	При указании в качестве переменной $hint любого числа, комментарий печататься не будет.
+	$menu_type = checkbox - чекбокс
+	$menu_type = rollout - выпадающий список
+	$menu_type = radio - радиокнопка
+	*/
+		{
+			$jsonString = file_get_contents($file_name);
+			$menu_array = json_decode($jsonString);
+
+			switch ($menu_type) {
+				case "rollout" :
+					echo "<p>\n<select name=\"$item_id\" id=\"$item_id\" size=\"1\">\n<option value='0'>...</option>\n";
+					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
+						echo "<option value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
+					}
+					echo "</select>\n";
+					break;
+				case "checkbox" :
+					echo "<p>\n";
+					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
+						echo "<input type=\"checkbox\" name=\"$item_id\" value='".$menu_item_type->id."'>".$menu_item_type->name."<br>\n";
+					}
+					break;
+				case "radio" :
+					echo "<p>\n";
+					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
+						echo "<input type=\"radio\" name=\"$item_id\" value=\"".$menu_item_type->id."\">".$menu_item_type->name."<br>\n";
+					}
+					break;
+			}
+
+			if (is_numeric($hint)) {
+					echo "</p>\n\n";
+			}
+			else {
+					echo "<small>$hint</small>\n";
+					echo "</p>\n\n";
+			}
+						
+		}
+
+
 //проверяем, передавалось ли нам директория, в которю входить.
 		if (!$_GET['dirname']) {
 			$dirname = "Crimea/"; //Если нет, то присваиваем значение по умолчанию.
@@ -61,7 +106,7 @@
 			<p>\n<small>Добавление нового населенного пункта:</small> <br>
 			<form action=\"admin_index.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
 			<input type=\"text\" name=\"type\" value=\"town\" hidden size=\"1\">
-			<input type=\"text\" name=\"id\" value=\"".$addtown."\" size=\"3\" />
+			<input type=\"text\" name=\"id\" value=\"".$addtown."\" disabled size=\"2\" />
 			<small> ID</small>
 			<p>
 			<p>
@@ -80,8 +125,45 @@
 		}
 		elseif ($_GET['addhotel']) {
 			$addhotel = $_GET['addhotel'];
+			$config_file = "Crimea/hotel_type.json";
+
 			echo "<br>\n</p>\n
-			<p>\n<small>Добавление нового отеля:</small> </p><br>";
+			<p>\n<small>Добавление нового отеля:</small> </p><br>
+			<form action=\"admin_index.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
+			<input type=\"text\" name=\"type\" value=\"hotel\" hidden size=\"1\">
+			<input type=\"text\" name=\"id\" value=\"".$addhotel."\" disabled size=\"2\" />
+			<small> ID</small>
+			<p>
+			<p>
+			<input type=\"text\" name=\"Name\" value=\"\" size=\"25\" />
+			<small> Название</small>
+			</p>
+			<p>\n
+			<input type=\"text\" name=\"url\" id=\"url\" value=\"\" size=\"25\" />
+			<small> url (латинскими буквами, будет создана директория с таким именем)</small>
+			</p>";
+
+			echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
+			$item_id = "start";
+			menu_create ("rollout","month", $config_file, "0");
+			echo "<small>По:</small>\n";
+			$item_id = "end";
+			menu_create ("rollout","month", $config_file, "0");
+			menu_create ("rollout","hotel_type", $config_file, "Тип отеля");
+			echo "<small>Классы номеров (выбрать всё, что подходит):</small>\n";
+			menu_create ("checkbox","room_type", $config_file, "0");
+			echo "<small>Дополнительная инфраструктура (выбрать всё, что подходит):</small>\n";
+			menu_create ("checkbox","infra_type", $config_file, "0");
+			echo "<small>Питание на выбор (выбрать всё, что подходит):</small>\n";
+			menu_create ("checkbox","meal_type", $config_file, "0");
+			echo "<small>Тип пляжа:</small>\n";
+			menu_create ("radio","beach_type", $config_file, "0");		
+
+			echo "</form>
+			<p>
+			<input type=\"submit\" value=\"Отправить\">
+			</p>
+			";
 		}
 
 	?>
