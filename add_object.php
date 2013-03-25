@@ -58,7 +58,63 @@ if ($_POST['type'] == "town") {
 }
 //Добавление нового отеля.
 elseif ($_POST['type'] == "hotel") {
-	# code...
+
+	function data_filling ($item_type, $post_item, $new_json_string)
+	{
+		$hotel_settings_json = file_get_contents("Crimea/hotel_type.json");
+		$hotel_settings_json = json_decode($hotel_settings_json);
+		$template_settings = $hotel_settings_json->data[0];
+		foreach ($template_settings->$item_type as $type) {
+			if ($type->id == $post_item) {
+				$new_type = array("id" => $post_item, "name" => $type->name);
+			}
+		}
+		print_r($new_type);
+		print_r($new_json_string);
+		array_push($new_json_string, $new_type);
+		print_r($new_json_string);
+	}
+
+
+
+	$new_dir_path = $_GET['dirname'].$_POST['url']."/";
+	//print_r($_POST);
+	//print_r($_GET);
+	$new_json = file_get_contents("Crimea/template_hotel.json");
+	$new_json = json_decode($new_json);
+
+
+	$hotel_settings_json = file_get_contents("Crimea/hotel_type.json");
+	$hotel_settings_json = json_decode($hotel_settings_json);
+	$template_settings = $hotel_settings_json->data[0];
+		//print_r($_POST['hotel_type']);
+/*
+	foreach ($template_settings->hotel_type as $hotel_type) {
+		if ($hotel_type->id == $_POST['hotel_type']) {
+			$new_hotel_type = array("id" => $_POST['hotel_type'], "name" => $hotel_type->name);
+		}
+	}
+
+*/
+	
+
+	data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
+	//array_push($new_json->data[0]->hotel_type, $new_type);
+
+	$new_json->DirName = $_POST['Name'];
+	$new_json->settings[0]->name = $_POST['Name'];
+	$new_json->settings[0]->location = $_POST['location'];
+	$new_json->settings[0]->address = $_POST['address'];
+	$new_json->settings[0]->email = $_POST['email'];
+	$new_json->settings[0]->phone = $_POST['phone'];
+	$new_json->settings[0]->skype = $_POST['skype'];
+	$new_json->settings[0]->homepage = $_POST['homepage'];
+	$new_json->settings[0]->gps = $_POST['gps'];
+	$new_json->settings[0]->comment = $_POST['comment'];
+	$new_json->settings[0]->parent[0]->name = $_GET['parentname'];
+	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
+	
+	print_r($new_json);
 }
 
 /*

@@ -1,0 +1,55 @@
+{
+   "DirName" : "",
+   "settings" : [
+      {
+         "name" : "",
+         "nameEN" :"",
+         "url" : "",
+         "location" :"",
+         "address" : "",
+         "email" : "",
+         "phone" : "",
+         "skype" : "",
+         "homepage" : "",
+         "gps" : "",
+         "comment" : "",
+         "parent" : [
+            {
+               "name": "",
+               "url" : ""
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "hotel_type": [],
+         "room_type": [],
+         "month": [
+            {
+               "id": "",
+               "name": ""
+            }
+         ],
+         "beach_type": [
+            {
+               "id": "",
+               "name": ""
+            }
+         ],
+         "meal_type": [
+            {
+               "id": "",
+               "name": ""
+            }
+         ],
+         "infra_type": [
+            {
+               "id": "",
+               "name": ""
+            }
+         ]
+      }
+   ]
+}

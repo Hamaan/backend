@@ -18,7 +18,7 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 
 			switch ($menu_type) {
 				case "rollout" :
-					echo "<p>\n<select name=\"$item_id\" id=\"$item_id\" size=\"1\">\n<option value='0'>...</option>\n";
+					echo "<p>\n<select name=\"$item_type\" id=\"$item_type\" size=\"1\">\n<option value='0'>...</option>\n";
 					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
 						echo "<option value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
 					}
@@ -27,13 +27,13 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 				case "checkbox" :
 					echo "<p>\n";
 					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
-						echo "<input type=\"checkbox\" name=\"$item_id\" value='".$menu_item_type->id."'>".$menu_item_type->name."<br>\n";
+						echo "<input type=\"checkbox\" name=\"$item_type".$menu_item_type->id."\" value='".$menu_item_type->id."'>".$menu_item_type->name."<br>\n";
 					}
 					break;
 				case "radio" :
 					echo "<p>\n";
 					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
-						echo "<input type=\"radio\" name=\"$item_id\" value=\"".$menu_item_type->id."\">".$menu_item_type->name."<br>\n";
+						echo "<input type=\"radio\" name=\"$item_type\" value=\"".$menu_item_type->id."\">".$menu_item_type->name."<br>\n";
 					}
 					break;
 			}
@@ -133,14 +133,18 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			<input type=\"text\" name=\"type\" value=\"hotel\" hidden size=\"1\">
 			<input type=\"text\" name=\"id\" value=\"".$addhotel."\" disabled size=\"2\" />
 			<small> ID</small>
-			<p>
-			<p>
+			<p>\n
+			<p>\n
 			<input type=\"text\" name=\"Name\" value=\"\" size=\"25\" />
 			<small> Название</small>
-			</p>
+			</p>\n
 			<p>\n
 			<input type=\"text\" name=\"url\" id=\"url\" value=\"\" size=\"25\" />
 			<small> url (латинскими буквами, будет создана директория с таким именем)</small>
+			</p>\n
+			<p>\n
+			<input type=\"text\" name=\"location\" id=\"location\" value=\"\" size=\"25\" />
+			<small>Расположение  (например \"в центре города, недалеко от рынка\")</small>
 			</p>";
 
 			echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
@@ -159,11 +163,49 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			echo "<small>Тип пляжа:</small>\n";
 			menu_create ("radio","beach_type", $config_file, "0");		
 
-			echo "</form>
-			<p>
-			<input type=\"submit\" value=\"Отправить\">
-			</p>
-			";
+			echo "
+			<p>\n
+				<input type=\"text\" name=\"address\" id=\"address\" value=\"\" size=\"25\" />
+				<small>Адрес</small>
+			</p>\n
+			<p>\n
+				<input type=\"text\" name=\"email\" id=\"email\" value=\"\" size=\"25\" />
+				<small>E-mail</small>
+			</p>\n
+			<p>\n
+				<input type=\"text\" name=\"phone\" id=\"phone\" value=\"\" size=\"25\" />
+				<small>Телефон</small>
+			</p>\n
+			<p>\n
+				<input type=\"text\" name=\"skype\" id=\"skype\" value=\"\" size=\"15\" />
+				<small>Skype</small>
+			</p>\n
+			<p>\n
+				<input type=\"text\" name=\"homepage\" id=\"skype\" value=\"\" size=\"25\" />
+				<small>Сайт</small>
+			</p>\n
+			<p>\n
+				<input type=\"text\" name=\"gps\" id=\"gps\" value=\"\" size=\"25\" />
+				<small>GPS</small>
+			</p>\n
+			<p>\n
+				<small>Краткое описание:</small> <br>
+				<textarea name=\"comment\" id=\"comment\" cols=\"48\" rows=\"8\"> </textarea>
+			</p>\n
+			<p>\n
+				<small>Фотографии объекта:</small> <br>
+				<input name=\"picture1\" type=\"file\" />
+			</p>\n
+			<p>\n
+				<input name=\"picture2\" type=\"file\" />
+			</p>\n
+			<p>\n
+				<input name=\"picture3\" type=\"file\" />
+			</p>\n
+			<p>\n
+				<input type=\"submit\" value=\"Отправить\">
+			</p>\n
+			</form>";
 		}
 
 	?>
