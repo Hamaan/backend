@@ -58,9 +58,11 @@ if ($_POST['type'] == "town") {
 }
 //Добавление нового отеля.
 elseif ($_POST['type'] == "hotel") {
-
+	$new_type = array();
+	print_r($_POST);
 	function data_filling ($item_type, $post_item, $new_json_string)
 	{
+		global $new_type;
 		$hotel_settings_json = file_get_contents("Crimea/hotel_type.json");
 		$hotel_settings_json = json_decode($hotel_settings_json);
 		$template_settings = $hotel_settings_json->data[0];
@@ -69,17 +71,15 @@ elseif ($_POST['type'] == "hotel") {
 				$new_type = array("id" => $post_item, "name" => $type->name);
 			}
 		}
-		print_r($new_type);
-		print_r($new_json_string);
-		array_push($new_json_string, $new_type);
-		print_r($new_json_string);
+		//print_r($new_type);
+		//print_r($new_json_string);
+		//array_push($new_json_string, $new_type);
+		//print_r($new_json_string);
 	}
 
 
 
 	$new_dir_path = $_GET['dirname'].$_POST['url']."/";
-	//print_r($_POST);
-	//print_r($_GET);
 	$new_json = file_get_contents("Crimea/template_hotel.json");
 	$new_json = json_decode($new_json);
 
@@ -99,7 +99,11 @@ elseif ($_POST['type'] == "hotel") {
 	
 
 	data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
-	//array_push($new_json->data[0]->hotel_type, $new_type);
+	array_push($new_json->data[0]->hotel_type, $new_type);
+	data_filling ("beach_type", $_POST['beach_type'], $new_json->data[0]->beach_type);
+	array_push($new_json->data[0]->beach_type, $new_type);
+	data_filling ("room_type", $_POST['room_type'], $new_json->data[0]->room_type);
+	array_push($new_json->data[0]->room_type, $new_type);
 
 	$new_json->DirName = $_POST['Name'];
 	$new_json->settings[0]->name = $_POST['Name'];

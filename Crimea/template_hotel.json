@@ -26,30 +26,10 @@
       {
          "hotel_type": [],
          "room_type": [],
-         "month": [
-            {
-               "id": "",
-               "name": ""
-            }
-         ],
-         "beach_type": [
-            {
-               "id": "",
-               "name": ""
-            }
-         ],
-         "meal_type": [
-            {
-               "id": "",
-               "name": ""
-            }
-         ],
-         "infra_type": [
-            {
-               "id": "",
-               "name": ""
-            }
-         ]
+         "month": [],
+         "beach_type": [],
+         "meal_type": [],
+         "infra_type": []
       }
    ]
 }
