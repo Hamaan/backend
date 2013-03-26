@@ -18,7 +18,7 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 
 			switch ($menu_type) {
 				case "rollout" :
-					echo "<p>\n<select name=\"$item_type\" id=\"$item_type\" size=\"1\">\n<option value='0'>...</option>\n";
+					echo "<p>\n<select name=\"$item_type".'[]'."\" id=\"$item_type\" size=\"1\">\n<option value='0'>...</option>\n";
 					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
 						echo "<option value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
 					}
@@ -27,7 +27,7 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 				case "checkbox" :
 					echo "<p>\n";
 					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
-						echo "<input type=\"checkbox\" name=\"$item_type".$menu_item_type->id."\" value='".$menu_item_type->id."'>".$menu_item_type->name."<br>\n";
+						echo "<input type=\"checkbox\" name='$item_type".'[]'."' value='".$menu_item_type->id."'>".$menu_item_type->name."<br>\n";
 					}
 					break;
 				case "radio" :
@@ -106,16 +106,12 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			<p>\n<small>Добавление нового населенного пункта:</small> <br>
 			<form action=\"admin_index.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
 			<input type=\"text\" name=\"type\" value=\"town\" hidden size=\"1\">
-			<input type=\"text\" name=\"id\" value=\"".$addtown."\" disabled size=\"2\" />
-			<small> ID</small>
+			<input type=\"text\" name=\"id\" value=\"".$addtown."\" hidden size=\"2\">
+			<small>ID: ".$addtown."</small>
 			<p>
 			<p>
 			<input type=\"text\" name=\"Name\" value=\"\" size=\"25\" />
 			<small> Название</small>
-			</p>
-			<p>
-			<input type=\"text\" name=\"url\" id=\"url\" value=\"\" size=\"25\" />
-			<small> url (латинскими буквами, будет создана директория с таким именем)</small>
 			</p>
 			<p>
 			<input type=\"submit\" value=\"Отправить\">
@@ -131,16 +127,12 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			<p>\n<small>Добавление нового отеля:</small> </p><br>
 			<form action=\"admin_index.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
 			<input type=\"text\" name=\"type\" value=\"hotel\" hidden size=\"1\">
-			<input type=\"text\" name=\"id\" value=\"".$addhotel."\" disabled size=\"2\" />
-			<small> ID</small>
+			<input type=\"text\" name=\"id\" value=\"".$addhotel."\" hidden size=\"2\">
+			<small>ID ".$addhotel."</small>
 			<p>\n
 			<p>\n
 			<input type=\"text\" name=\"Name\" value=\"\" size=\"25\" />
 			<small> Название</small>
-			</p>\n
-			<p>\n
-			<input type=\"text\" name=\"url\" id=\"url\" value=\"\" size=\"25\" />
-			<small> url (латинскими буквами, будет создана директория с таким именем)</small>
 			</p>\n
 			<p>\n
 			<input type=\"text\" name=\"location\" id=\"location\" value=\"\" size=\"25\" />
