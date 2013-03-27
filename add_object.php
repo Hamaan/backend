@@ -43,7 +43,7 @@ if ($_POST['type'] == "town") {
 	$index_array = json_decode($json_index_string);
 	$name_en = translit($_POST['Name']); //Переводим введённое название на латиницу.
 	$new_dir_path = $_GET['dirname'].str_replace(" ", "_", $name_en)."/"; //Заменяем пробелы в названии на подчёркивания, создаем имя директории.
-	$new_town = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => $name_en."/");
+	$new_town = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => str_replace(" ", "_", $name_en)."/");
 
 //создаём новую директорию
 	$hotel_path = $new_dir_path."Hotels/";
@@ -55,7 +55,6 @@ if ($_POST['type'] == "town") {
 //дописываем в массив значений данные о новом объекте
 	array_push($index_array->data[0]->towns, $new_town);
 	$index_array = json_encode($index_array);
-//	print_r($index_array);
 	
 //Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
 	$index_file = fopen($_GET['dirname']."index.json", 'w');
@@ -126,6 +125,30 @@ elseif ($_POST['type'] == "hotel") {
 	$hotel_settings_json = json_decode($hotel_settings_json);
 	$template_settings = $hotel_settings_json->data[0];
 
+
+	$name_en = translit($_POST['Name']); //Переводим введённое название на латиницу.
+	$new_dir_path = $_GET['dirname']."Hotels/".str_replace(" ", "_", $name_en)."/"; //Заменяем пробелы в названии на подчёркивания, создаем имя директории.
+	$data_path = $new_dir_path."data/";
+	dir_create($new_dir_path); // Создаём директории для нового отеля.
+	dir_create($data_path);
+
+//заносим информацию о новом отеле в индексный файл родительской директории
+	$json_index_string = file_get_contents($_GET['dirname']."index.json");
+	$index_array = json_decode($json_index_string);
+	$new_hotel = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => "Hotels/".str_replace(" ", "_", $name_en)."/");
+
+//дописываем в массив значений данные о новом объекте
+	$index_array->data[0]->hotels[] = $new_hotel;
+	$index_array = json_encode($index_array);
+
+	
+//Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
+	$index_file = fopen($_GET['dirname']."index.json", 'w');
+	fwrite($index_file, $index_array);
+	fclose($index_file);
+	echo "Запись в индексный файл внесена успешно <br>";
+
+//Заполняем массив значений, чтобы свормировать индексный файл отеля.
 	data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
 	$new_json->data[0]->hotel_type = $new_type;
 	data_filling ("beach_type", $_POST['beach_type'], $new_json->data[0]->beach_type);
@@ -138,13 +161,6 @@ elseif ($_POST['type'] == "hotel") {
 	$new_json->data[0]->infra_type = $new_type;
 	data_filling ("month", $_POST['month'], $new_json->data[0]->month);
 	$new_json->data[0]->month = $new_type;
-
-	$name_en = translit($_POST['Name']); //Переводим введённое название на латиницу.
-	$new_dir_path = $_GET['dirname'].str_replace(" ", "_", $name_en)."/"; //Заменяем пробелы в названии на подчёркивания, создаем имя директории.
-	$data_path = $new_dir_path."data/";
-	dir_create($new_dir_path); // Создаём директории для нового отеля.
-	dir_create($data_path);
-
 
 	$new_json->DirName = $_POST['Name'];
 	$new_json->settings[0]->name = $_POST['Name'];
@@ -162,12 +178,18 @@ elseif ($_POST['type'] == "hotel") {
 	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
 	
 	$new_json = json_encode($new_json);
-	$new_json = json_decode($new_json);
-	print_r($new_json);
+//	$new_json = json_decode($new_json);
+//	print_r($new_json);
+//Записываем получившуюся строку в файл с необходимым названием и местоположением.
+	$new_index_file = fopen($new_dir_path."index.json", 'x');
+	fwrite($new_index_file, $new_json);
+	fclose($new_index_file);
 
+	echo "Новый объект создан успешно.";
 
+	
 	$types = array('image/gif', 'image/png', 'image/jpeg');
-
+/*
 
  	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
  		// Проверяем тип файла
@@ -181,6 +203,7 @@ elseif ($_POST['type'] == "hotel") {
 			echo "Загрузка файла ".$_FILES['picture1']['name']." завершена удачно.";
 		}
 	}
+*/
 }
 
 /*

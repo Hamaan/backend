@@ -60,35 +60,40 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 		$JsonString = file_get_contents("$dirname"."index.json");	
 		$LinksArray = json_decode($JsonString);
 		$root_set = $LinksArray->settings;
-		$newtown = 0;
 //формируем меню: текущее местоположение, список доступных директорий для перехода и, ниже, список отелей в данном населённом пункте.
 		echo "<p>\n";
 		echo "<small>Вы сейчас находитесь здесь:</small> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$LinksArray->settings[0]->parent[0]->url."\">".$LinksArray->settings[0]->parent[0]->name."</a> > ".$root_set[0]->name."<br>\n";
-		foreach ($LinksArray->data[0]->towns as $towns) {
-			echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n";
-		}
-		$newtown = $towns->id + 1;
-		$newhotel = $hotels->id + 1;
+
 		if (!$_GET['object'] and !$_GET['addtown'] and !$_GET['addhotel']) {
-			echo "<br>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$newtown."\">Добавить новый населённый пункт</a>\n <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addhotel=".$newhotel."\">Добавить новый отель</a>\n<br>\n</p>\n";
+			$id = 1;
+			foreach ($LinksArray->data[0]->towns as $towns) {
+				echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n";
+				$id++;
+			}
+			
+			echo "<br>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$id."\">Добавить новый населённый пункт</a>\n</p>\n";
+			$id = 1;
 			echo "<p>\n<small>Список отелей в данном населенном пункте:</small> <br>";
 			foreach ($LinksArray->data[0]->hotels as $hotels) {
 				echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a><br>\n";
+				$id++;
 			}
+				
+			echo "<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addhotel=".$id."\">Добавить новый отель</a>\n<br>\n";
 			echo "</p>\n";
 		}
 		
 		elseif ($_GET['object']) {
 			$object = $_GET['object'];
-			foreach ($LinksArray->data[0]->hotels as $hotels) {
-				if ($hotels->id == $object) {
-					# code...
+			//print_r($LinksArray);
+			//foreach ($LinksArray->data[0]->hotels as $hotels) {
+			//	if ($hotels->id == $object) {
 			
 			echo "<br>\n</p>\n
-			<p>\n<small>Изменение информации об объекте \"".$hotels->name."\":</small> <br>
+			<p>\n<small>Изменение информации об объекте \"".$LinksArray->settings[0]->name."\":</small> <br>
 			<form action=\"admin_index.php?action=add_object\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
 			<p>\n
-			<input type=\"text\" name=\"HotelName\" id=\"HotelName\" value=\"".$hotels->name."\" size=\"25\" />
+			<input type=\"text\" name=\"HotelName\" id=\"HotelName\" value=\"".$LinksArray->settings[0]->name."\" size=\"25\" />
 			<small> Название</small>
 			</p>
 			<p>
@@ -96,8 +101,8 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			</p>
 			</form>
 			";
-				}
-			}
+			//	}
+			//}
 		}
 
 		elseif ($_GET['addtown']) {
