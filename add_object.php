@@ -7,15 +7,16 @@
 		} 
 	}
 
+# функция транслитерации кириллического названия.
 function translit($str){
     $alphavit = array(
-    /*--*/
+    /* строчные буквы */
     "а"=>"a","б"=>"b","в"=>"v","г"=>"g","д"=>"d","е"=>"e",
     "ё"=>"yo","ж"=>"zh","з"=>"z","и"=>"i","й"=>"y","к"=>"k","л"=>"l", "м"=>"m",
     "н"=>"n","о"=>"o","п"=>"p","р"=>"r","с"=>"s","т"=>"t",
     "у"=>"u","ф"=>"f","х"=>"h","ц"=>"ts","ч"=>"ch", "ш"=>"sh","щ"=>"sch",
     "ы"=>"i","э"=>"e","ю"=>"yu","я"=>"ya",
-    /*--*/
+    /* заглавные буквы */
     "А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D","Е"=>"E", "Ё"=>"Yo",
     "Ж"=>"Zh","З"=>"Z","И"=>"I","Й"=>"Y","К"=>"K", "Л"=>"L","М"=>"M",
     "Н"=>"N","О"=>"O","П"=>"P", "Р"=>"R","С"=>"S","Т"=>"T","У"=>"U",
@@ -26,6 +27,7 @@ function translit($str){
     return strtr($str, $alphavit);
 }
 
+# функция создания директории
 function dir_create ($dir_path){
 	if (!is_dir($dir_path)) {
 		mkdir("$dir_path");
@@ -36,6 +38,53 @@ function dir_create ($dir_path){
 	}
 }
 
+# функция изменения размера загружаемых изображений.
+function image_resize($file_name, $file_type, $tmp_name, $quality = null) {
+	global $tmp_path;
+	//ограничиваем размер изображениях в пикселах.
+	$max_width_size = 800;
+	$max_preview_size = 240;
+
+	if ($quality == null){
+		$quality = 75;
+	}
+	if ($file_type == 'image/jpeg'){
+		$source = imagecreatefromjpeg($tmp_name);
+	}
+	elseif ($file_type == 'image/png'){
+		$source = imagecreatefrompng($tmp_name);
+	}
+	elseif ($file_type == 'image/gif'){
+		$source = imagecreatefromgif($tmp_name);
+	}
+	else {
+		return false;
+	}
+
+	// Определяем ширину и высоту изображения
+	$src_width = imagesx($source);
+	$src_height = imagesy($source);
+
+	//если ширина загруженного изображения больше максимально допустимого размера, то делаем ресайз
+	if ($src_width > $max_width_size) {
+		// вычисляем пропорции
+		$ratio = $src_width/$max_width_size;
+		$new_width = round($src_width/$ratio);
+		$new_height = round($src_height/$ratio);
+		// создаём пустую картинку
+		$dest_image = imagecreatetruecolor($new_width, $new_height);
+		// Копируем старое изображение в новое с изменением параметров
+		imagecopyresampled($dest_image, $source, 0, 0, 0, 0, $new_width, $new_height, $src_width, $src_height);
+		// Вывод картинки и очистка памяти
+		imagejpeg($dest_image, $tmp_path . $file_name, $quality);
+		imagedestroy($dest_image);
+		imagedestroy($source);
+		return $file_name;
+	}
+	elseif ($src_width < $max_width_size) {
+		echo "Файл ".$file_name." слишком маленький. Поищите лучшего качества.<br>\n";
+	}
+}
 
 //Добавление нового населённого пункта.
 if ($_POST['type'] == "town") {
@@ -87,7 +136,6 @@ if ($_POST['type'] == "town") {
 //Добавление нового отеля.
 elseif ($_POST['type'] == "hotel") {
 	$new_type = array();
-	//print_r($_POST);
 	function data_filling ($item_type, $post_item, $new_json_string)
 	{
 		global $new_type;
@@ -105,7 +153,6 @@ elseif ($_POST['type'] == "hotel") {
 					}
 				}
 			}
-//		print_r($new_type);
 		}
 		else {
 			foreach ($template_settings->$item_type as $type) {
@@ -125,12 +172,12 @@ elseif ($_POST['type'] == "hotel") {
 	$hotel_settings_json = json_decode($hotel_settings_json);
 	$template_settings = $hotel_settings_json->data[0];
 
-
+//Создаём директории.
 	$name_en = translit($_POST['Name']); //Переводим введённое название на латиницу.
 	$new_dir_path = $_GET['dirname']."Hotels/".str_replace(" ", "_", $name_en)."/"; //Заменяем пробелы в названии на подчёркивания, создаем имя директории.
 	$data_path = $new_dir_path."data/";
-	dir_create($new_dir_path); // Создаём директории для нового отеля.
-	dir_create($data_path);
+//	dir_create($new_dir_path); // Создаём директории для нового отеля.
+//	dir_create($data_path);
 
 //заносим информацию о новом отеле в индексный файл родительской директории
 	$json_index_string = file_get_contents($_GET['dirname']."index.json");
@@ -143,10 +190,10 @@ elseif ($_POST['type'] == "hotel") {
 
 	
 //Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
-	$index_file = fopen($_GET['dirname']."index.json", 'w');
-	fwrite($index_file, $index_array);
-	fclose($index_file);
-	echo "Запись в индексный файл внесена успешно <br>";
+//	$index_file = fopen($_GET['dirname']."index.json", 'w');
+//	fwrite($index_file, $index_array);
+//	fclose($index_file);
+//	echo "Запись в индексный файл внесена успешно <br>";
 
 //Заполняем массив значений, чтобы свормировать индексный файл отеля.
 	data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
@@ -178,32 +225,55 @@ elseif ($_POST['type'] == "hotel") {
 	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
 	
 	$new_json = json_encode($new_json);
-//	$new_json = json_decode($new_json);
-//	print_r($new_json);
+
 //Записываем получившуюся строку в файл с необходимым названием и местоположением.
-	$new_index_file = fopen($new_dir_path."index.json", 'x');
-	fwrite($new_index_file, $new_json);
-	fclose($new_index_file);
+//	$new_index_file = fopen($new_dir_path."index.json", 'x');
+//	fwrite($new_index_file, $new_json);
+//	fclose($new_index_file);
 
-	echo "Новый объект создан успешно.";
+//	echo "Новый объект создан успешно.";
 
-	
+//Обработка загруженных изображений.	
 	$types = array('image/gif', 'image/png', 'image/jpeg');
-/*
+	$max_file_size = 1536000;
+	$tmp_path = "res/";
+	//print_r($_FILES);
 
  	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
  		// Проверяем тип файла
- 		if (!in_array($_FILES['picture']['type'], $types)){
- 			die("Запрещённый тип файла: ".$_FILES['picture1']['name']);
+ 		foreach ($_FILES['picture']['name'] as $k => $v) {
+ 			if (isset($v)) {
+ 				if (!in_array($_FILES['picture']['type'][$k], $types)){
+ 					echo "Запрещённый тип файла: ".$v.". Файл не загружен.<br>\n";
+ 				}
+ 				else {
+ 					if ($_FILES['picture']['size'][$k] > $max_file_size) {
+ 						echo "Размер файла ".$v." больше предельно допустимых ".$max_file_size." байт. Файл не загружен.<br>\n";
+ 					}
+ 					else{
+ 						echo "Тип файла ".$v." годный, можно загружать.<br>\n";
+ 						$pic_name = image_resize($_FILES['picture']['name'][$k] , $_FILES['picture']['type'][$k] , $_FILES['picture']['tmp_name'][$k], 60);
+
+	 					if (!is_dir($data_path)) {
+ 							dir_create($data_path);
+ 						}
+ 						if (!@copy($tmp_path.$pic_name, $data_path.$pic_name)){
+							echo "Не удалось загрузить файл ".$pic_name." по указанному пути: ".$data_path."<br>\n";
+						}
+						else {
+							echo "Загрузка файла ".$v." завершена удачно.<br>\n";
+						}
+					}
+ 				}
+ 			}
  		}
-		if (!@copy($_FILES['picture1']['tmp_name'], $path . $_FILES['picture1']['name'])){
+	/*	if (!@copy($_FILES['picture1']['tmp_name'], $data_path . $_FILES['picture1']['name'])){
 			echo 'Что-то пошло не так';
 		}
 		else {
 			echo "Загрузка файла ".$_FILES['picture1']['name']." завершена удачно.";
-		}
+		} */
 	}
-*/
 }
 
 /*
@@ -253,7 +323,7 @@ if (!is_dir($root_path)){
 		}
 	}
 */
-
+	echo "<p> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$_GET['dirname']."\">Вернуться в родительский раздел</a>";
 ?>
 
 </div>
