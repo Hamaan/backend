@@ -81,9 +81,9 @@ function image_resize($file_name, $file_type, $tmp_name, $quality = null) {
 		imagedestroy($source);
 		return $file_name;
 	}
-	elseif ($src_width < $max_width_size) {
+/*	elseif ($src_width < $max_width_size) {
 		echo "Файл ".$file_name." слишком маленький. Поищите лучшего качества.<br>\n";
-	}
+	} */
 }
 
 # Добавление нового населённого пункта.
@@ -176,8 +176,8 @@ elseif ($_POST['type'] == "hotel") {
 	$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
 	$new_dir_path = $_GET['dirname']."Hotels/".str_replace(" ", "_", $name_en)."/"; # Заменяем пробелы в названии на подчёркивания, создаем имя директории.
 	$data_path = $new_dir_path."data/";
-//	dir_create($new_dir_path); # Создаём директории для нового отеля.
-//	dir_create($data_path);
+	dir_create($new_dir_path); # Создаём директории для нового отеля.
+	dir_create($data_path);
 
 # заносим информацию о новом отеле в индексный файл родительской директории
 	$json_index_string = file_get_contents($_GET['dirname']."index.json");
@@ -190,10 +190,10 @@ elseif ($_POST['type'] == "hotel") {
 
 	
 # Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
-//	$index_file = fopen($_GET['dirname']."index.json", 'w');
-//	fwrite($index_file, $index_array);
-//	fclose($index_file);
-//	echo "Запись в индексный файл внесена успешно <br>";
+	$index_file = fopen($_GET['dirname']."index.json", 'w');
+	fwrite($index_file, $index_array);
+	fclose($index_file);
+	echo "Запись в индексный файл внесена успешно <br>";
 
 # Заполняем массив значений, чтобы свормировать индексный файл отеля.
 	data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
@@ -224,20 +224,11 @@ elseif ($_POST['type'] == "hotel") {
 	$new_json->settings[0]->parent[0]->name = $_GET['parentname'];
 	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
 	
-	$new_json = json_encode($new_json);
-
-# Записываем получившуюся строку в файл с необходимым названием и местоположением.
-//	$new_index_file = fopen($new_dir_path."index.json", 'x');
-//	fwrite($new_index_file, $new_json);
-//	fclose($new_index_file);
-
-//	echo "Новый объект создан успешно.";
 
 # Обработка загруженных изображений.	
 	$types = array('image/gif', 'image/png', 'image/jpeg');
-	$max_file_size = 1536000;
+	$max_file_size = 153600000;
 	$tmp_path = "res/";
-	//print_r($_FILES);
 
  	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
  		# Проверяем тип файла
@@ -260,6 +251,8 @@ elseif ($_POST['type'] == "hotel") {
 							echo "Не удалось загрузить файл ".$pic_name." по указанному пути: ".$data_path."<br>\n";
 						}
 						else {
+							$new_pic = array("id" => $k, "name" => $_FILES['picture']['name'][$k]);
+							$new_json->settings[0]->pics[] = $new_pic;
 							echo "Загрузка файла ".$v." завершена удачно.<br>\n";
 							# Удаляем временный файл
 							unlink($tmp_path . $pic_name);
@@ -322,6 +315,17 @@ elseif ($_POST['type'] == "hotel") {
  			}
  		}
 	}
+
+# Записываем получившуюся строку в файл с необходимым названием и местоположением.
+	print_r($new_json);
+
+	$new_json = json_encode($new_json);
+	$new_index_file = fopen($new_dir_path."index.json", 'x');
+	fwrite($new_index_file, $new_json);
+	fclose($new_index_file);
+
+	echo "Новый объект создан успешно.";
+
 }
 ?>
 
