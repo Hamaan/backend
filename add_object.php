@@ -41,7 +41,7 @@ function dir_create ($dir_path){
 # функция изменения размера загружаемых изображений.
 function image_resize($file_name, $file_type, $tmp_name, $quality = null) {
 	global $tmp_path;
-	//ограничиваем размер изображениях в пикселах.
+	# ограничиваем размер изображениях в пикселах.
 	$max_width_size = 800;
 	$max_preview_size = 240;
 
@@ -61,21 +61,21 @@ function image_resize($file_name, $file_type, $tmp_name, $quality = null) {
 		return false;
 	}
 
-	// Определяем ширину и высоту изображения
+	# Определяем ширину и высоту изображения
 	$src_width = imagesx($source);
 	$src_height = imagesy($source);
 
-	//если ширина загруженного изображения больше максимально допустимого размера, то делаем ресайз
+	# если ширина загруженного изображения больше максимально допустимого размера, то делаем ресайз
 	if ($src_width > $max_width_size) {
-		// вычисляем пропорции
+		# вычисляем пропорции
 		$ratio = $src_width/$max_width_size;
 		$new_width = round($src_width/$ratio);
 		$new_height = round($src_height/$ratio);
-		// создаём пустую картинку
+		# создаём пустую картинку
 		$dest_image = imagecreatetruecolor($new_width, $new_height);
-		// Копируем старое изображение в новое с изменением параметров
+		# Копируем старое изображение в новое с изменением параметров
 		imagecopyresampled($dest_image, $source, 0, 0, 0, 0, $new_width, $new_height, $src_width, $src_height);
-		// Вывод картинки и очистка памяти
+		# Вывод картинки и очистка памяти
 		imagejpeg($dest_image, $tmp_path . $file_name, $quality);
 		imagedestroy($dest_image);
 		imagedestroy($source);
@@ -86,36 +86,36 @@ function image_resize($file_name, $file_type, $tmp_name, $quality = null) {
 	}
 }
 
-//Добавление нового населённого пункта.
+# Добавление нового населённого пункта.
 if ($_POST['type'] == "town") {
 	$json_index_string = file_get_contents($_GET['dirname']."index.json");
 	$index_array = json_decode($json_index_string);
-	$name_en = translit($_POST['Name']); //Переводим введённое название на латиницу.
-	$new_dir_path = $_GET['dirname'].str_replace(" ", "_", $name_en)."/"; //Заменяем пробелы в названии на подчёркивания, создаем имя директории.
+	$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
+	$new_dir_path = $_GET['dirname'].str_replace(" ", "_", $name_en)."/"; # Заменяем пробелы в названии на подчёркивания, создаем имя директории.
 	$new_town = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => str_replace(" ", "_", $name_en)."/");
 
-//создаём новую директорию
+# создаём новую директорию
 	$hotel_path = $new_dir_path."Hotels/";
 	$data_path = $new_dir_path."data/";
-	dir_create($new_dir_path); //Директория населеннного пункта.
-	dir_create($hotel_path); //вложенная директория  для отелей.
-	dir_create($data_path); //вложенная директория для данных.
+	dir_create($new_dir_path); # Директория населеннного пункта.
+	dir_create($hotel_path); # вложенная директория  для отелей.
+	dir_create($data_path); # вложенная директория для данных.
 
-//дописываем в массив значений данные о новом объекте
+# дописываем в массив значений данные о новом объекте
 	array_push($index_array->data[0]->towns, $new_town);
 	$index_array = json_encode($index_array);
 	
-//Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
+# Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
 	$index_file = fopen($_GET['dirname']."index.json", 'w');
 	fwrite($index_file, $index_array);
 	fclose($index_file);
 	echo "Запись в индексный файл внесена успешно <br>";
 
 	
-//Открываем файл-шаблон JSON.
+# Открываем файл-шаблон JSON.
 	$new_json = file_get_contents("Crimea/template.json");
 	$new_json = json_decode($new_json);
-//Запихиваем реальные значения.
+# Запихиваем реальные значения.
 	$new_json->DirName = $_POST['Name'];
 	$new_json->settings[0]->name = $_POST['Name'];
 	$new_json->settings[0]->nameEN = $name_en;
@@ -123,7 +123,7 @@ if ($_POST['type'] == "town") {
 	$new_json->settings[0]->parent[0]->name = $_GET['parentname'];
 	$new_json->settings[0]->parent[0]->url = $_GET['dirname'];
 	$new_json = json_encode($new_json);
-//Записываем получившуюся строку в файл с необходимым названием и местоположением.
+# Записываем получившуюся строку в файл с необходимым названием и местоположением.
 	$new_index_file = fopen($new_dir_path."index.json", 'x');
 	fwrite($new_index_file, $new_json);
 	fclose($new_index_file);
@@ -133,7 +133,7 @@ if ($_POST['type'] == "town") {
 }
 
 
-//Добавление нового отеля.
+# Добавление нового отеля.
 elseif ($_POST['type'] == "hotel") {
 	$new_type = array();
 	function data_filling ($item_type, $post_item, $new_json_string)
@@ -172,30 +172,30 @@ elseif ($_POST['type'] == "hotel") {
 	$hotel_settings_json = json_decode($hotel_settings_json);
 	$template_settings = $hotel_settings_json->data[0];
 
-//Создаём директории.
-	$name_en = translit($_POST['Name']); //Переводим введённое название на латиницу.
-	$new_dir_path = $_GET['dirname']."Hotels/".str_replace(" ", "_", $name_en)."/"; //Заменяем пробелы в названии на подчёркивания, создаем имя директории.
+# Создаём директории.
+	$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
+	$new_dir_path = $_GET['dirname']."Hotels/".str_replace(" ", "_", $name_en)."/"; # Заменяем пробелы в названии на подчёркивания, создаем имя директории.
 	$data_path = $new_dir_path."data/";
-//	dir_create($new_dir_path); // Создаём директории для нового отеля.
+//	dir_create($new_dir_path); # Создаём директории для нового отеля.
 //	dir_create($data_path);
 
-//заносим информацию о новом отеле в индексный файл родительской директории
+# заносим информацию о новом отеле в индексный файл родительской директории
 	$json_index_string = file_get_contents($_GET['dirname']."index.json");
 	$index_array = json_decode($json_index_string);
 	$new_hotel = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => "Hotels/".str_replace(" ", "_", $name_en)."/");
 
-//дописываем в массив значений данные о новом объекте
+# дописываем в массив значений данные о новом объекте
 	$index_array->data[0]->hotels[] = $new_hotel;
 	$index_array = json_encode($index_array);
 
 	
-//Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
+# Открываем файл index.json соответствующей директории и перезаписываем его содержимое с учётом добавления нового объекта.
 //	$index_file = fopen($_GET['dirname']."index.json", 'w');
 //	fwrite($index_file, $index_array);
 //	fclose($index_file);
 //	echo "Запись в индексный файл внесена успешно <br>";
 
-//Заполняем массив значений, чтобы свормировать индексный файл отеля.
+# Заполняем массив значений, чтобы свормировать индексный файл отеля.
 	data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
 	$new_json->data[0]->hotel_type = $new_type;
 	data_filling ("beach_type", $_POST['beach_type'], $new_json->data[0]->beach_type);
@@ -226,21 +226,21 @@ elseif ($_POST['type'] == "hotel") {
 	
 	$new_json = json_encode($new_json);
 
-//Записываем получившуюся строку в файл с необходимым названием и местоположением.
+# Записываем получившуюся строку в файл с необходимым названием и местоположением.
 //	$new_index_file = fopen($new_dir_path."index.json", 'x');
 //	fwrite($new_index_file, $new_json);
 //	fclose($new_index_file);
 
 //	echo "Новый объект создан успешно.";
 
-//Обработка загруженных изображений.	
+# Обработка загруженных изображений.	
 	$types = array('image/gif', 'image/png', 'image/jpeg');
 	$max_file_size = 1536000;
 	$tmp_path = "res/";
 	//print_r($_FILES);
 
  	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
- 		// Проверяем тип файла
+ 		# Проверяем тип файла
  		foreach ($_FILES['picture']['name'] as $k => $v) {
  			if (isset($v)) {
  				if (!in_array($_FILES['picture']['type'][$k], $types)){
@@ -248,82 +248,123 @@ elseif ($_POST['type'] == "hotel") {
  				}
  				else {
  					if ($_FILES['picture']['size'][$k] > $max_file_size) {
- 						echo "Размер файла ".$v." больше предельно допустимых ".$max_file_size." байт. Файл не загружен.<br>\n";
- 					}
+ 						echo "Размер файла ".$v." больше предельно допустимых ".$max_file_size	." байт. Файл не загружен.<br>\n";
+	 				}
  					else{
  						echo "Тип файла ".$v." годный, можно загружать.<br>\n";
  						$pic_name = image_resize($_FILES['picture']['name'][$k] , $_FILES['picture']['type'][$k] , $_FILES['picture']['tmp_name'][$k], 60);
-
 	 					if (!is_dir($data_path)) {
- 							dir_create($data_path);
- 						}
- 						if (!@copy($tmp_path.$pic_name, $data_path.$pic_name)){
+							dir_create($data_path);
+						}
+						if (!@copy($tmp_path.$pic_name, $data_path.$pic_name)){
 							echo "Не удалось загрузить файл ".$pic_name." по указанному пути: ".$data_path."<br>\n";
 						}
 						else {
 							echo "Загрузка файла ".$v." завершена удачно.<br>\n";
+							# Удаляем временный файл
+							unlink($tmp_path . $pic_name);
+							echo "<p>\n <img id=\"photo\" src=\"".$data_path.$v."\" alt=\"\" title=\"\" style=\"margin: 0 0 0 10px;\" />\n </p>\n";
+							echo "
+								<form action=\"add_object.php\" method=\"post\">
+   								<input type=\"hidden\" name=\"x1\" value=\"\" />
+   								<input type=\"hidden\" name=\"y1\" value=\"\" />
+   								<input type=\"hidden\" name=\"x2\" value=\"\" />
+   								<input type=\"hidden\" name=\"y2\" value=\"\" />
+   								<input type=\"hidden\" name=\"w\" value=\"\" />
+   								<input type=\"hidden\" name=\"h\" value=\"\" />
+   								<input type=\"hidden\" name=\"dir\" value=\"".$data_path."\" />
+   								<input type=\"hidden\" name=\"crop_name\" value=\"".$v."\" />
+   								<input type=\"submit\" value=\"Обрезать\" />
+								</form>
+							";
+							echo "
+								<script type=\"text/javascript\"> 
+								function preview(img, selection) {
+								    var scaleX = 200 / (selection.width || 1);
+								    var scaleY = 150 / (selection.height || 1);
+								    $('#photo + div > img').css({
+									        width: Math.round(scaleX * 600) + 'px',
+									        height: Math.round(scaleY * 400) + 'px',
+									        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+							        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+								    });
+								} 
+
+								$(document).ready(function () {
+								    $('<div><img src=\"".$data_path.$v."\" style=\"position: relative;\" /><div>') .css({
+								        float: 'left',
+								        position: 'relative',
+								        overflow: 'hidden',
+								        width: '200px',
+								        height: '150px'
+								    }) .insertAfter($('#photo')); 
+
+								    $('#photo').imgAreaSelect({
+								        aspectRatio: '4:3',
+								        handles: true,
+								        onSelectChange: preview,
+								        onSelectEnd: function ( image, selection ) {
+								            $('input[name=x1]').val(selection.x1);
+								            $('input[name=y1]').val(selection.y1);
+								            $('input[name=x2]').val(selection.x2);
+								            $('input[name=y2]').val(selection.y2);
+								            $('input[name=w]').val(selection.width);
+								            $('input[name=h]').val(selection.height);
+								        }
+								    });
+								}); 
+							</script>
+
+							";
 						}
 					}
- 				}
+				}
  			}
  		}
-	/*	if (!@copy($_FILES['picture1']['tmp_name'], $data_path . $_FILES['picture1']['name'])){
-			echo 'Что-то пошло не так';
-		}
-		else {
-			echo "Загрузка файла ".$_FILES['picture1']['name']." завершена удачно.";
-		} */
 	}
 }
-
-/*
-$JsonSecondString = file_get_contents("res/zones.json");
-$path_array = json_decode($JsonSecondString);
-
-$root_path= 'Crimea/';
-if (!is_dir($root_path)){
-		mkdir("$root_path");
-	}
-	foreach ($path_array->Contents as $Contents) {
-		if ($Contents->zoneID == $_POST["zoneID"]) {
-			$path = $root_path.$Contents->zoneNameEN."/";
-			echo "path: ".$path."</br>";
-			if (!is_dir($path )){
-				mkdir("$path");
-			}
-			foreach ($Contents->zoneTown as $zoneTown) {
-				if ($zoneTown->townID == $_POST["TownSelect"]) {
-					$path = $path.$zoneTown->townNameEN."/";
-					echo "spath: ".$path."</br>";
-					if (!is_dir($path )){
-						mkdir("$path");
-					}
-				}
-			}
-		}
-	}
-
-	$path = 'image/';
-	if (!is_dir($path )){
-		mkdir('image/');
-	}
-	$types = array('image/gif', 'image/png', 'image/jpeg');
+?>
 
 
- 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
- 		// Проверяем тип файла
- 		if (!in_array($_FILES['picture']['type'], $types)){
- 			die("Запрещённый тип файла: ".$_FILES['picture1']['name']);
- 		}
-		if (!@copy($_FILES['picture1']['tmp_name'], $path . $_FILES['picture1']['name'])){
-			echo 'Что-то пошло не так';
-		}
-		else {
-			echo "Загрузка файла ".$_FILES['picture1']['name']." завершена удачно.";
-		}
-	}
-*/
-	echo "<p> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$_GET['dirname']."\">Вернуться в родительский раздел</a>";
+<?php
+
+if (isset($_POST['crop_name'])) {
+
+	// Original image
+	$filename = $_POST['crop_name'];
+	$dir = $_POST['dir'];
+	//die(print_r($_POST));
+	$new_filename = "crop_".$filename;
+
+	// Get dimensions of the original image
+	list($current_width, $current_height) = getimagesize($dir.$filename);
+
+	// The x and y coordinates on the original image where we
+	// will begin cropping the image, taken from the form
+	$x1    = $_POST['x1'];
+	$y1    = $_POST['y1'];
+	$x2    = $_POST['x2'];
+	$y2    = $_POST['y2'];
+	$w    = $_POST['w'];
+	$h    = $_POST['h'];     
+
+	//die(print_r($_POST));
+
+	// This will be the final size of the image
+	$crop_width = 200;
+	$crop_height = 150;
+
+	// Create our small image
+	$new = imagecreatetruecolor($crop_width, $crop_height);
+	// Create original image
+	$current_image = imagecreatefromjpeg($dir.$filename);
+	// resamling (actual cropping)
+	imagecopyresampled($new, $current_image, 0, 0, $x1, $y1, $crop_width, $crop_height, $w, $h);
+	// creating our new image
+	imagejpeg($new, $dir.$new_filename, 95);
+}
+
+echo "<p> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$_GET['dirname']."\">Вернуться в родительский раздел</a>";
 ?>
 
 </div>
