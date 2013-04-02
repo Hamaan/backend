@@ -5,7 +5,16 @@ print_r($LinksArray);
 echo "<br>\n</p>\n<p>\n<h3>Просмотр информации об объекте \"".$LinksArray->settings[0]->name."\":</h3> <br>";
 //echo "<p>\n";
 foreach ($LinksArray->settings[0] as $k => $v) {
-	echo "<span>".$k.": ".$v."</span><br />\n";
+	if (is_array($v)) {
+		echo "<span>".$k.":</span><br />\n";
+		foreach ($v[0] as $x => $y) {
+				echo "<span>".$x.": ".$y."</span>\n";
+			}
+		echo "<br />";
+	}
+	else {
+		echo "<span>".$k.": ".$v."</span><br />\n";
+	}
 }
 
 //foreach ($LinksArray->settings[0]->pics[0] as $pics) {
