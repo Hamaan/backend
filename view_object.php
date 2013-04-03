@@ -3,35 +3,38 @@
 
 
 echo "<br>\n</p>\n<p>\n<h3>Просмотр информации об объекте \"".$LinksArray->settings[0]->name."\":</h3> <br>";
-//echo "<p>\n";
+?>
+
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+
+<?php
 foreach ($LinksArray->settings[0] as $k => $v) {
+	echo "<tr>\n";
 	if (is_array($v)) {
-		echo "<span>".$k.":</span><br />\n";
+		echo "<td colspan=\"2\" class=\"light\">".$k.":</td>\n</tr>\n";
 		foreach ($v[0] as $x => $y) {
 				if (preg_match('/.jpg/i', $y)) {
-					echo "<span><img src=\"".$dirname.$hotels->url."data/".$y."\"></span>";
+					echo "<tr>\n<td></td>\n<td><img src=\"".$dirname.$hotels->url."data/".$y."\" width=\"200\" heith=\"150\"></td>\n</tr>\n";
 				}
 				else {
-					echo "<span>".$x.": ".$y."</span>\n";
+					echo "<tr>\n<td>".$x.": </td>\n<td>".$y."</td>\n</tr>\n";
 				}
 			}
-		echo "<br />";
+
 	}
 	else {
-		echo "<span>".$k.": ".$v."</span><br />\n";
+		echo "<td width=\"20%\">".$k.": </td>\n<td>".$v."</td>\n</tr>\n";
 	}
 }
 
-//foreach ($LinksArray->settings[0]->pics[0] as $pics) {
-//	echo "<p><img src=\"".$dirname.$hotels->url."data/".$pics->name."></p>\n";
-//	
-//}
 foreach ($LinksArray->data[0] as $key => $val) {
-	echo "<span>".$key.": <br />\n<ul>\n";
+	echo "<td colspan=\"2\" class=\"light\">".$key.":</td>\n</tr>\n";
 	foreach ($val as $k) {
-		echo "<li>".$k->name."</li><br />\n";
+		echo "<tr>\n<td></td>\n<td>".$k->name."</td>\n</tr>\n";
 	}
-	echo "</ul>\n</span>\n";
 }
-//echo "</p>\n";
+
+echo "</table>\n";
+echo "<p>\n<a href=\"".$_SERVER['HTTP_REFERER']."\">Вернуться на предыдущую страницу</a>\n</p>\n";
+
 ?>
