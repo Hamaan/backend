@@ -56,7 +56,7 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 		else {
 			$dirname = $_GET['dirname'];
 		}
-//открываем индексный файл JSON, который лежи в каждой директории.
+//открываем индексный файл JSON, который лежит в каждой директории.
 		$JsonString = file_get_contents("$dirname"."index.json");	
 		$LinksArray = json_decode($JsonString);
 		$root_set = $LinksArray->settings;
@@ -65,12 +65,12 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 		echo "<small>Вы сейчас находитесь здесь:</small> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$LinksArray->settings[0]->parent[0]->url."\">".$LinksArray->settings[0]->parent[0]->name."</a> > ".$root_set[0]->name."<br>\n";
 
 		if (!$_GET['object'] and !$_GET['addtown'] and !$_GET['addhotel']) {
-			$id = 1;
+			//$id = 1;
 			echo "<table width=\"200\" border=\"0\" cellspacing=\"2\" cellpadding=\"2\">\n";
 			//echo "<td>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$id."\" alt=\"Добавить новый населённый пункт\">+</a>\n</td>\n";
 			foreach ($LinksArray->data[0]->towns as $towns) {
-				echo "<tr>\n<td>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n</td>\n<td>Edit</td>\n<td>Del</td>\n</tr>\n";
-				$id++;
+				echo "<tr>\n<td>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n</td>\n<td>Edit</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=town&id=".$towns->id."&dirname=".$dirname.$towns->url."\">Del</a>\n</td>\n</tr>\n";
+				$id = $towns->id + 1;
 			}
 			echo "<tr>\n<td  class=\"light\">\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$id."\" title=\"Добавить новый населённый пункт\">+</a>\n</td>\n</tr>\n";
 			echo "</table>\n";

@@ -1,4 +1,64 @@
 
 <div class="contents">
 	<h2>Удаление существующего объекта</h2> <br>
+
+<?php
+	function rmdir_recursive($dir) {
+    	foreach(scandir($dir) as $file) {
+	        if ('.' === $file || '..' === $file) continue;
+    	    if (is_dir("$dir/$file")) rmdir_recursive("$dir/$file");
+        	else unlink("$dir/$file");
+	    }
+    	rmdir($dir);
+	}
+
+
+	if (!$_GET['dirname']) {
+		echo "Вы попали на эту страницу случайно.";
+	}
+	else {
+		$dirname = $_GET['dirname'];
+		$JsonString = file_get_contents("$dirname"."index.json");	
+		$LinksArray = json_decode($JsonString);
+		$root_set = $LinksArray->settings;
+		$parentdir = $LinksArray->settings[0]->parent[0]->url;
+		$victim_id = $_GET['id'];
+		$victim_type = $_GET['type'];
+		$JsonString = file_get_contents("$parentdir"."index.json");
+		$LinksArray = json_decode($JsonString);
+		//print_r($LinksArray);
+
+		if ($_GET['confirm'] == "yes") {
+			if ($_GET['type'] == "town") {
+				foreach ($LinksArray->data[0]->towns as $key => $val) {
+					foreach ($val as $k => $v) {
+						if ($v == $victim_id) {
+							unset($LinksArray->data[0]->towns[$key]);
+						}
+					}
+				}
+			sort($LinksArray->data[0]->towns);
+			$JsonString = json_encode($LinksArray);
+			$index_file = fopen("$parentdir"."index.json", 'w');
+			fwrite($index_file, $JsonString);
+			fclose($index_file);
+			echo "Запись из индексного файла удалена успешно.<br>\n";
+			}
+			elseif ($_GET['type'] == "hotel") {
+				# code...
+			}
+			rmdir_recursive($dirname);
+			echo "Директория ".$dirname." удалена успешно.<br>\n";
+			echo "<p>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit\">Вернуться к списку населенных пунктов.</a>";
+		}
+		elseif (!$_GET['confirm']) {
+			echo "<p>\nВы действительно хотите удалить директорию ".$dirname."?\n</p>\n";
+			echo "<p>\n<a href=\"".$_SERVER['PHP_SELF']."?action=delete&dirname=".$dirname."&type=".$_GET['type']."&id=".$_GET['id']."&confirm=yes\">Да. Удалить окончательно и бесповоротно.</a>";
+			echo "<p>\n<a href=\"".$_SERVER['HTTP_REFERER']."\">Нет. (вернуться на предыдущую страницу)</a>\n</p>\n";
+		}
+	}
+
+?>
+
+
 </div>
