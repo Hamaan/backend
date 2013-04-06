@@ -95,8 +95,8 @@ if ($_POST['type'] == "town") {
 	$new_town = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => str_replace(" ", "_", $name_en)."/");
 
 # создаём новую директорию
-	$hotel_path = $new_dir_path."Hotels/";
-	$data_path = $new_dir_path."data/";
+	$hotel_path = $new_dir_path."_Hotels/";
+	$data_path = $new_dir_path."_Data/";
 	dir_create($new_dir_path); # Директория населеннного пункта.
 	dir_create($hotel_path); # вложенная директория  для отелей.
 	dir_create($data_path); # вложенная директория для данных.
@@ -174,15 +174,15 @@ elseif ($_POST['type'] == "hotel") {
 
 # Создаём директории.
 	$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
-	$new_dir_path = $_GET['dirname']."Hotels/".str_replace(" ", "_", $name_en)."/"; # Заменяем пробелы в названии на подчёркивания, создаем имя директории.
-	$data_path = $new_dir_path."data/";
+	$new_dir_path = $_GET['dirname']."_Hotels/".str_replace(" ", "_", $name_en)."/"; # Заменяем пробелы в названии на подчёркивания, создаем имя директории.
+	$data_path = $new_dir_path."_Data/";
 	dir_create($new_dir_path); # Создаём директории для нового отеля.
 	dir_create($data_path);
 
 # заносим информацию о новом отеле в индексный файл родительской директории
 	$json_index_string = file_get_contents($_GET['dirname']."index.json");
 	$index_array = json_decode($json_index_string);
-	$new_hotel = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => "Hotels/".str_replace(" ", "_", $name_en)."/");
+	$new_hotel = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => "_Hotels/".str_replace(" ", "_", $name_en)."/");
 
 # дописываем в массив значений данные о новом объекте
 	$index_array->data[0]->hotels[] = $new_hotel;
