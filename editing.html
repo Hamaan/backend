@@ -80,7 +80,7 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 				echo "<p>\n<small>Список отелей в данном населенном пункте:</small>\n<br>\n";
 				echo "<table border=\"0\" cellspacing=\"2\" cellpadding=\"2\">\n";
 				foreach ($LinksArray->data[0]->hotels as $hotels) {
-					echo "<tr>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a>\n</td>\n<td>Edit</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=hotel&id=".$hotels->id."&dirname=".$dirname.$hotels->url."\">Del</a></td>\n</tr>\n";
+					echo "<tr>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a>\n</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&edit=true&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">Edit</a>\n</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=hotel&id=".$hotels->id."&dirname=".$dirname.$hotels->url."\">Del</a></td>\n<td>Загрузить/Изменить изображения</td></tr>\n";
 					$id = $hotels->id + 1;
 				}
 			
@@ -90,25 +90,13 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 		}
 		
 		elseif ($_GET['object']) {
-			$object = $_GET['object'];
-			//print_r($LinksArray);
-			//foreach ($LinksArray->data[0]->hotels as $hotels) {
-			//	if ($hotels->id == $object) {
-			include ("view_object.php");
-		/*	echo "<br>\n</p>\n
-			<p>\n<small>Изменение информации об объекте \"".$LinksArray->settings[0]->name."\":</small> <br>
-			<form action=\"admin_index.php?action=add_object\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
-			<p>\n
-			<input type=\"text\" name=\"HotelName\" id=\"HotelName\" value=\"".$LinksArray->settings[0]->name."\" size=\"25\" />
-			<small> Название</small>
-			</p>
-			<p>
-			<input type=\"submit\" value=\"Отправить\">
-			</p>
-			</form>
-			"; */
-			//	}
-			//}
+			if ($_GET['edit']) {
+				$object = $_GET['object'];
+				include ("change_object.php");
+			}
+			else {
+				include ("view_object.php");
+			}
 		}
 
 		elseif ($_GET['addtown']) {
