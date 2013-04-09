@@ -80,8 +80,8 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 				echo "<p>\n<small>Список отелей в данном населенном пункте:</small>\n<br>\n";
 				echo "<table border=\"0\" cellspacing=\"2\" cellpadding=\"2\">\n";
 				foreach ($LinksArray->data[0]->hotels as $hotels) {
-					echo "<tr>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a>\n</td>\n<td>Edit</td>\n<td>Del</td>\n</tr>\n";
-					$id++;
+					echo "<tr>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a>\n</td>\n<td>Edit</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=hotel&id=".$hotels->id."&dirname=".$dirname.$hotels->url."\">Del</a></td>\n</tr>\n";
+					$id = $hotels->id + 1;
 				}
 			
 				echo "<tr>\n<td colspal=\"3\" class=\"light\"><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addhotel=".$id."\" title=\"Добавить новый отель\">+</a></td>\n</tr>\n";

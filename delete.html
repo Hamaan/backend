@@ -37,16 +37,26 @@
 						}
 					}
 				}
-			sort($LinksArray->data[0]->towns);
-			$JsonString = json_encode($LinksArray);
+				sort($LinksArray->data[0]->towns);
+				$JsonString = json_encode($LinksArray);
+			}
+			elseif ($_GET['type'] == "hotel") {
+				foreach ($LinksArray->data[0]->hotels as $key => $val) {
+					foreach ($val as $k => $v) {
+						if ($v == $victim_id) {
+							unset($LinksArray->data[0]->hotels[$key]);
+						}
+					}
+				}
+				sort($LinksArray->data[0]->hotels);
+				$JsonString = json_encode($LinksArray);
+			}
+			print_r($LinksArray);
 			$index_file = fopen("$parentdir"."index.json", 'w');
 			fwrite($index_file, $JsonString);
 			fclose($index_file);
 			echo "Запись из индексного файла удалена успешно.<br>\n";
-			}
-			elseif ($_GET['type'] == "hotel") {
-				# code...
-			}
+
 			rmdir_recursive($dirname);
 			echo "Директория ".$dirname." удалена успешно.<br>\n";
 			echo "<p>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit\">Вернуться к списку населенных пунктов.</a>";
