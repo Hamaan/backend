@@ -101,6 +101,7 @@
 	echo "<form action=\"admin_index.php?action=add_object&change=true&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
 			<input type=\"hidden\" name=\"type\" value=\"hotel\">
 			<input type=\"hidden\" name=\"id\" value=\"".$_GET['object']."\">
+			<input type=\"hidden\" name=\"parenturl\" value=\"".$root_set[0]->parent[0]->url."\">
 			<small>ID ".$_GET['object']."</small>
 			<p>\n
 			<p>\n

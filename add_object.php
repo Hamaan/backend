@@ -86,8 +86,52 @@ function image_resize($file_name, $file_type, $tmp_name, $quality = null) {
 	} */
 }
 
+function data_filling ($item_type, $post_item, $new_json_string){
+	global $new_type;
+	$new_type = array();
+	$hotel_settings_json = file_get_contents("Crimea/hotel_type.json");
+	$hotel_settings_json = json_decode($hotel_settings_json);
+	$template_settings = $hotel_settings_json->data[0];
+
+	if (is_array($post_item)) {
+		$i = 0;
+		foreach ($post_item as $value) {
+			foreach ($template_settings->$item_type as $type) {
+				if ($type->id == $value) {
+					$new_type[] = array("id" => $value, "name" => $type->name);
+				}
+			}
+		}
+	}
+	else {
+		foreach ($template_settings->$item_type as $type) {
+			if ($type->id == $post_item) {
+				$new_type[] = array("id" => $post_item, "name" => $type->name);
+			}
+		}
+	}		
+}
+
 
 if ($_GET['change'] == "true") {
+	if ($_POST['type'] == "hotel") {
+		$json_index_string = file_get_contents($_POST['parenturl']."index.json");
+		$index_array = json_decode($json_index_string);
+		$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
+		//print_r($index_array);
+		foreach ($index_array->data[0]->hotels as $hotels) {
+			if ($hotels->id == $_POST['id']) {
+				$hotels->name = $_POST['Name'];
+			}
+		}
+		$index_array = json_encode($index_array);
+		$index_file = fopen($_POST['parenturl']."index.json", 'w');
+		fwrite($index_file, $index_array);
+		fclose($index_file);
+		echo "Запись в индексном файле изменена успешно <br>\n";
+
+
+	}
 	echo "<p> Bingo!!!\n<br>";
 	print_r($_POST);
 	echo "\n</p>\n";
@@ -116,7 +160,7 @@ else {
 		$index_file = fopen($_GET['dirname']."index.json", 'w');
 		fwrite($index_file, $index_array);
 		fclose($index_file);
-		echo "Запись в индексный файл внесена успешно <br>";
+		echo "Запись в индексный файл внесена успешно <br>\n";
 
 	
 # Открываем файл-шаблон JSON.
@@ -143,32 +187,7 @@ else {
 # Добавление нового отеля.
 	elseif ($_POST['type'] == "hotel") {
 		$new_type = array();
-		function data_filling ($item_type, $post_item, $new_json_string)
-		{
-			global $new_type;
-			$new_type = array();
-			$hotel_settings_json = file_get_contents("Crimea/hotel_type.json");
-			$hotel_settings_json = json_decode($hotel_settings_json);
-			$template_settings = $hotel_settings_json->data[0];
-
-			if (is_array($post_item)) {
-				$i = 0;
-				foreach ($post_item as $value) {
-					foreach ($template_settings->$item_type as $type) {
-						if ($type->id == $value) {
-							$new_type[] = array("id" => $value, "name" => $type->name);
-						}
-					}
-				}
-			}
-			else {
-				foreach ($template_settings->$item_type as $type) {
-					if ($type->id == $post_item) {
-						$new_type[] = array("id" => $post_item, "name" => $type->name);
-					}
-				}
-			}		
-		}
+		
 		$new_json = file_get_contents("Crimea/template_hotel.json");
 		$new_json = json_decode($new_json);
 		$hotel_settings_json = file_get_contents("Crimea/hotel_type.json");
@@ -198,7 +217,7 @@ else {
 		fclose($index_file);
 		echo "Запись в индексный файл внесена успешно <br>";
 
-# Заполняем массив значений, чтобы свормировать индексный файл отеля.
+# Заполняем массив значений, чтобы сформировать индексный файл отеля.
 		data_filling ("hotel_type", $_POST['hotel_type'], $new_json->data[0]->hotel_type);
 		$new_json->data[0]->hotel_type = $new_type;
 		data_filling ("beach_type", $_POST['beach_type'], $new_json->data[0]->beach_type);
@@ -287,13 +306,7 @@ else {
 									} 
 
 									$(document).ready(function () {
-									    $('<div><img src=\"".$data_path.$v."\" style=\"position: relative;\" /><div>') .css({
-									        float: 'left',
-									        position: 'relative',
-									        overflow: 'hidden',
-									        width: '200px',
-									        height: '150px'
-									    }) .insertAfter($('#photo')); 
+
 	
 									    $('#photo').imgAreaSelect({
 									        aspectRatio: '4:3',
