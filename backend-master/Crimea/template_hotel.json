@@ -1,0 +1,35 @@
+{
+   "DirName" : "",
+   "settings" : [
+      {
+         "name" : "",
+         "nameEN" :"",
+         "url" : "",
+         "location" :"",
+         "address" : "",
+         "email" : "",
+         "phone" : "",
+         "skype" : "",
+         "homepage" : "",
+         "gps" : "",
+         "comment" : "",
+         "parent" : [
+            {
+               "name": "",
+               "url" : ""
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "hotel_type": [],
+         "room_type": [],
+         "month": [],
+         "beach_type": [],
+         "meal_type": [],
+         "infra_type": []
+      }
+   ]
+}

@@ -1,0 +1,23 @@
+{
+   "DirName" : "",
+   "settings" : [
+      {
+         "name" : "",
+         "nameEN" :"",
+         "url" : "",
+         "parent" : [
+            {
+               "name": "",
+               "url" : ""
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

@@ -1,0 +1,69 @@
+html
+{
+	text-align: justify;
+	font-family: verdana;
+	font-size: 11;
+	padding: 0px;
+	margin: 0px;
+}
+
+body
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+a
+{
+	text-decoration: none;
+	font-style: bold;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+table
+{
+	font-size: 11px;
+	padding: 2px;
+	background-color: #fff;
+}
+
+td
+{
+	background-color: #ddd;
+}
+
+td.light
+{
+	background-color: #fefefe;
+}
+
+div
+{
+	position: absolute;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+
+.menu
+{
+	left: 0px;
+	width: 300px;
+	background-color: #ddd;
+	min-height: 200px;
+}
+
+.contents
+{
+	left: 300px;
+	min-width: 850px;
+	background-color: #eee;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	min-height: 200px;
+}
