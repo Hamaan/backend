@@ -251,6 +251,10 @@ else {
 		$types = array('image/gif', 'image/png', 'image/jpeg');
 		$max_file_size = 153600000;
 		$tmp_path = "res/";
+		$crop1 = array(640, 340);
+		$crop2 = array(123, 85);
+		$crop3 = array(640, 960);
+		$crop_array = array('crop1'=>$crop1, 'crop2'=>$crop2, 'crop3'=>$crop3);
 
 	 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
  			# Проверяем тип файла
@@ -278,26 +282,35 @@ else {
 								echo "Загрузка файла ".$v." завершена удачно.<br>\n";
 								# Удаляем временный файл
 								unlink($tmp_path . $pic_name);
-								echo "<p>\n <img id=\"photo\" src=\"".$data_path.$v."\" alt=\"\" title=\"\" style=\"margin: 0 0 0 10px;\" />\n </p>\n";
+
+								foreach ($crop_array as $key => $value) {
+									echo "<p>\n <img id=\"".$key."\" src=\"".$data_path.$v."\" alt=\"\" title=\"\" style=\"margin: 0 0 0 10px;\" />\n </p>\n";
+								}
 									echo "
-									<form action=\"add_object.php\" method=\"post\">
-   									<input type=\"hidden\" name=\"x1\" value=\"\" />
-   									<input type=\"hidden\" name=\"y1\" value=\"\" />
-   									<input type=\"hidden\" name=\"x2\" value=\"\" />
-   									<input type=\"hidden\" name=\"y2\" value=\"\" />
-   									<input type=\"hidden\" name=\"w\" value=\"\" />
-   									<input type=\"hidden\" name=\"h\" value=\"\" />
-   									<input type=\"hidden\" name=\"dir\" value=\"".$data_path."\" />
-	   								<input type=\"hidden\" name=\"crop_name\" value=\"".$v."\" />
+									<form action=\"add_object.php\" method=\"post\">";
+								foreach ($crop_array as $key => $value) {
+									echo "
+   									<input type=\"hidden\" name=\"x1".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"y1".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"x2".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"y2".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"w".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"h".$key."\" value=\"\" />
+	   								<input type=\"hidden\" name=\"".$key."\" value=\"".$v."\" />
+	   								";
+	   							}
+	   							echo "
+	   								<input type=\"hidden\" name=\"dir\" value=\"".$data_path."\" />
    									<input type=\"submit\" value=\"Обрезать\" />
 									</form>
 								";
-								echo "
-									<script type=\"text/javascript\"> 
+								echo "<script type=\"text/javascript\"> \n";
+								foreach ($crop_array as $key => $value) {
+									echo "
 									function preview(img, selection) {
-									    var scaleX = 200 / (selection.width || 1);
-									    var scaleY = 150 / (selection.height || 1);
-								    	$('#photo + div > img').css({
+									    var scaleX = ".$value[0]." / (selection.width || 1);
+									    var scaleY = ".$value[1]." / (selection.height || 1);
+								    	$('#".$key." + div > img').css({
 									    	    width: Math.round(scaleX * 600) + 'px',
 									        	height: Math.round(scaleY * 400) + 'px',
 										        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
@@ -308,22 +321,23 @@ else {
 									$(document).ready(function () {
 
 	
-									    $('#photo').imgAreaSelect({
-									        aspectRatio: '4:3',
+									    $('#".$key."').imgAreaSelect({
+									        aspectRatio: '".$value[0].":".$value[1]."',
 									        handles: true,
 									        onSelectChange: preview,
 									        onSelectEnd: function ( image, selection ) {
-									            $('input[name=x1]').val(selection.x1);
-									            $('input[name=y1]').val(selection.y1);
-									            $('input[name=x2]').val(selection.x2);
-								    	        $('input[name=y2]').val(selection.y2);
-								        	    $('input[name=w]').val(selection.width);
-								            	$('input[name=h]').val(selection.height);
+									            $('input[name=x1".$key."]').val(selection.x1);
+									            $('input[name=y1".$key."]').val(selection.y1);
+									            $('input[name=x2".$key."]').val(selection.x2);
+								    	        $('input[name=y2".$key."]').val(selection.y2);
+								        	    $('input[name=w".$key."]').val(selection.width);
+								            	$('input[name=h".$key."]').val(selection.height);
 									        }
 									    });
-									}); 
-								</script>
-								";
+									}); ";
+								}
+									
+								echo "</script>";
 							}
 						}
 					}
