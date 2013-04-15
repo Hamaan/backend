@@ -51,7 +51,7 @@
 				sort($LinksArray->data[0]->hotels);
 				$JsonString = json_encode($LinksArray);
 			}
-			print_r($LinksArray);
+			//print_r($LinksArray);
 			$index_file = fopen("$parentdir"."index.json", 'w');
 			fwrite($index_file, $JsonString);
 			fclose($index_file);

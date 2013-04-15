@@ -14,7 +14,7 @@ foreach ($LinksArray->settings[0] as $k => $v) {
 		echo "<td colspan=\"2\" class=\"light\">".$k.":</td>\n</tr>\n";
 		foreach ($v[0] as $x => $y) {
 				if (preg_match('/.jpg/i', $y)) {
-					echo "<tr>\n<td></td>\n<td><img src=\"".$dirname.$hotels->url."data/".$y."\" width=\"200\" heith=\"150\"></td>\n</tr>\n";
+					echo "<tr>\n<td></td>\n<td><img src=\"".$dirname.$hotels->url."_Data/".$y."\" width=\"200\" heith=\"150\"></td>\n</tr>\n";
 				}
 				else {
 					echo "<tr>\n<td>".$x.": </td>\n<td>".$y."</td>\n</tr>\n";
