@@ -47,7 +47,11 @@
 
 	print "\n";
 
+<<<<<<< HEAD
 	// include ("menu.html");
+=======
+	include ("menu.html");
+>>>>>>> cbb124aec00de5f0b8e7a3b0c6b7c7d539c5067b
 
 	print "\n";
 
@@ -74,4 +78,9 @@
     // вставляем низ странички
 	include ("end.html");
 
-?>
+<<<<<<< HEAD
+?>
+=======
+?>
+
+>>>>>>> cbb124aec00de5f0b8e7a3b0c6b7c7d539c5067b
