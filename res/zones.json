@@ -1,0 +1,224 @@
+{
+   "ZoneSet": "Крым",
+   "Contents": [
+         {
+            "zoneID": 1,
+            "zoneName": "Алушта",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "111",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "111",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 2,
+            "zoneName": "Джанкой",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "222",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "222",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 3,
+            "zoneName": "Евпатория",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "333",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "333",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 4,
+            "zoneName": "Керчь",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "444",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "444",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 5,
+            "zoneName": "Севастополь",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "555",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "555",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 6,
+            "zoneName": "Судак",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "666",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "666",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 7,
+            "zoneName": "Феодосия",
+            "zoneNameEN": "",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "777",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "777",
+                  "townNameEN": "",
+                  "townNameUA": ""
+               }
+            ]
+         },
+         {
+            "zoneID": 8,
+            "zoneName": "Ялта",
+            "zoneNameEN": "Yalta",
+            "zoneNameUA": "",
+            "zoneTown":  [
+               {
+                  "townID": 1,
+                  "townName": "Алупка",
+                  "townNameEN": "Alupka",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 2,
+                  "townName": "Гаспра",
+                  "townNameEN": "Gaspra",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 3,
+                  "townName": "Гурзуф",
+                  "townNameEN": "Gurzuf",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 4,
+                  "townName": "Кацивели",
+                  "townNameEN": "Katsiveli",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 5,
+                  "townName": "Ливадия",
+                  "townNameEN": "Livadiya",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 6,
+                  "townName": "Массандра",
+                  "townNameEN": "Massandra",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 7,
+                  "townName": "Никита",
+                  "townNameEN": "Nikita",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 8,
+                  "townName": "Ореанда",
+                  "townNameEN": "Oreanda",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 9,
+                  "townName": "Симеиз",
+                  "townNameEN": "Simeiz",
+                  "townNameUA": ""
+               },
+               {
+                  "townID": 10,
+                  "townName": "Форос",
+                  "townNameEN": "Foros",
+                  "townNameUA": ""
+               }
+            ]
+         }
+   ]
+}
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+      

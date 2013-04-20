@@ -112,6 +112,13 @@ function data_filling ($item_type, $post_item, $new_json_string){
 	}		
 }
 
+//Задание массива, определяющего размер обрезаемых изображений.
+$crop1 = array(640, 340);
+$crop2 = array(123, 85);
+$crop3 = array(640, 960);
+$crop_array = array('crop1'=>$crop1, 'crop2'=>$crop2, 'crop3'=>$crop3);
+
+
 
 if ($_GET['change'] == "true") {
 	if ($_POST['type'] == "hotel") {
@@ -132,9 +139,9 @@ if ($_GET['change'] == "true") {
 
 
 	}
-	echo "<p> Bingo!!!\n<br>";
-	print_r($_POST);
-	echo "\n</p>\n";
+	//echo "<p> Bingo!!!\n<br>";
+	//print_r($_POST);
+	//echo "\n</p>\n";
 }
 else {
 # Добавление нового населённого пункта.
@@ -194,17 +201,27 @@ else {
 		$hotel_settings_json = json_decode($hotel_settings_json);
 		$template_settings = $hotel_settings_json->data[0];
 
+
 # Создаём директории.
 		$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
 		$new_dir_path = $_GET['dirname']."_Hotels/".str_replace(" ", "_", $name_en)."/"; # Заменяем пробелы в названии на подчёркивания, создаем имя директории.
+		$parent_dir = $_GET['dirname'];
 		$data_path = $new_dir_path."_Data/";
-		dir_create($new_dir_path); # Создаём директории для нового отеля.
-		dir_create($data_path);
+
 
 # заносим информацию о новом отеле в индексный файл родительской директории
 		$json_index_string = file_get_contents($_GET['dirname']."index.json");
 		$index_array = json_decode($json_index_string);
 		$new_hotel = array("id" => $_POST['id'], "name" => $_POST['Name'], "url" => "_Hotels/".str_replace(" ", "_", $name_en)."/");
+
+		foreach ($index_array->data[0]->hotels as $key ) {
+			if ($key->id == $_POST['id']) {
+				die("Объект с таким ID уже существует в базе");
+			}
+		}
+
+		dir_create($new_dir_path); # Создаём директории для нового отеля.
+		dir_create($data_path);
 
 # дописываем в массив значений данные о новом объекте
 		$index_array->data[0]->hotels[] = $new_hotel;
@@ -278,26 +295,44 @@ else {
 								echo "Загрузка файла ".$v." завершена удачно.<br>\n";
 								# Удаляем временный файл
 								unlink($tmp_path . $pic_name);
-								echo "<p>\n <img id=\"photo\" src=\"".$data_path.$v."\" alt=\"\" title=\"\" style=\"margin: 0 0 0 10px;\" />\n </p>\n";
+								$max_id = 0;
+								foreach ($new_json->settings[0]->pics as $pics) {
+									if ($pics->id > $max_id) {
+										$max_id	= $pics->id;
+									}
+								}
+
+								foreach ($crop_array as $key => $value) {
+									$max_id++;
+									$new_pic = array("id" => $max_id, "name" => $key.$_FILES['picture']['name'][$k]);
+									echo "<p>\n <img id=\"".$key."\" src=\"".$data_path.$v."\" alt=\"\" title=\"\" style=\"margin: 0 0 0 10px;\" />\n </p>\n";
+								}
 									echo "
-									<form action=\"add_object.php\" method=\"post\">
-   									<input type=\"hidden\" name=\"x1\" value=\"\" />
-   									<input type=\"hidden\" name=\"y1\" value=\"\" />
-   									<input type=\"hidden\" name=\"x2\" value=\"\" />
-   									<input type=\"hidden\" name=\"y2\" value=\"\" />
-   									<input type=\"hidden\" name=\"w\" value=\"\" />
-   									<input type=\"hidden\" name=\"h\" value=\"\" />
-   									<input type=\"hidden\" name=\"dir\" value=\"".$data_path."\" />
-	   								<input type=\"hidden\" name=\"crop_name\" value=\"".$v."\" />
+									<form action=\"add_object.php\" method=\"post\">";
+								foreach ($crop_array as $key => $value) {
+									echo "
+   									<input type=\"hidden\" name=\"x1".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"y1".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"x2".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"y2".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"w".$key."\" value=\"\" />
+   									<input type=\"hidden\" name=\"h".$key."\" value=\"\" />
+	   								<input type=\"hidden\" name=\"".$key."\" value=\"".$v."\" />
+	   								";
+	   							}
+	   							echo "
+	   								<input type=\"hidden\" name=\"dir\" value=\"".$data_path."\" />
+	   								<input type=\"hidden\" name=\"parent_dir\" value=\"".$parent_dir."\" />
    									<input type=\"submit\" value=\"Обрезать\" />
 									</form>
 								";
-								echo "
-									<script type=\"text/javascript\"> 
+								echo "<script type=\"text/javascript\"> \n";
+								foreach ($crop_array as $key => $value) {
+									echo "
 									function preview(img, selection) {
-									    var scaleX = 200 / (selection.width || 1);
-									    var scaleY = 150 / (selection.height || 1);
-								    	$('#photo + div > img').css({
+									    var scaleX = ".$value[0]." / (selection.width || 1);
+									    var scaleY = ".$value[1]." / (selection.height || 1);
+								    	$('#".$key." + div > img').css({
 									    	    width: Math.round(scaleX * 600) + 'px',
 									        	height: Math.round(scaleY * 400) + 'px',
 										        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
@@ -308,22 +343,23 @@ else {
 									$(document).ready(function () {
 
 	
-									    $('#photo').imgAreaSelect({
-									        aspectRatio: '4:3',
+									    $('#".$key."').imgAreaSelect({
+									        aspectRatio: '".$value[0].":".$value[1]."',
 									        handles: true,
 									        onSelectChange: preview,
 									        onSelectEnd: function ( image, selection ) {
-									            $('input[name=x1]').val(selection.x1);
-									            $('input[name=y1]').val(selection.y1);
-									            $('input[name=x2]').val(selection.x2);
-								    	        $('input[name=y2]').val(selection.y2);
-								        	    $('input[name=w]').val(selection.width);
-								            	$('input[name=h]').val(selection.height);
+									            $('input[name=x1".$key."]').val(selection.x1);
+									            $('input[name=y1".$key."]').val(selection.y1);
+									            $('input[name=x2".$key."]').val(selection.x2);
+								    	        $('input[name=y2".$key."]').val(selection.y2);
+								        	    $('input[name=w".$key."]').val(selection.width);
+								            	$('input[name=h".$key."]').val(selection.height);
 									        }
 									    });
-									}); 
-								</script>
-								";
+									}); ";
+								}
+									
+								echo "</script>";
 							}
 						}
 					}
@@ -338,44 +374,44 @@ else {
 		fclose($new_index_file);
 		echo "Новый объект создан успешно.";
 	}
+	foreach ($crop_array as $key => $value) {
+		if (isset($_POST[$key])) {
 
-	if (isset($_POST['crop_name'])) {
+			// Original image
+			$filename = $_POST[$key];
+			$dir = $_POST['dir'];
+			$new_filename = $key.$filename;
 
-		// Original image
-		$filename = $_POST['crop_name'];
-		$dir = $_POST['dir'];
-		//die(print_r($_POST));
-		$new_filename = "crop_".$filename;
+			// Get dimensions of the original image
+			list($current_width, $current_height) = getimagesize($dir.$filename);
 
-		// Get dimensions of the original image
-		list($current_width, $current_height) = getimagesize($dir.$filename);
+			// The x and y coordinates on the original image where we
+			// will begin cropping the image, taken from the form
+			$x1    = $_POST['x1'.$key];
+			$y1    = $_POST['y1'.$key];
+			$x2    = $_POST['x2'.$key];
+			$y2    = $_POST['y2'.$key];
+			$w    = $_POST['w'.$key];
+			$h    = $_POST['h'.$key];     
 
-		// The x and y coordinates on the original image where we
-		// will begin cropping the image, taken from the form
-		$x1    = $_POST['x1'];
-		$y1    = $_POST['y1'];
-		$x2    = $_POST['x2'];
-		$y2    = $_POST['y2'];
-		$w    = $_POST['w'];
-		$h    = $_POST['h'];     
+			//die(print_r($_POST));
 
-		//die(print_r($_POST));
+			// This will be the final size of the image
+			$crop_width = $value[0];
+			$crop_height = $value[1];
 
-		// This will be the final size of the image
-		$crop_width = 200;
-		$crop_height = 150;
-
-		// Create our small image
-		$new = imagecreatetruecolor($crop_width, $crop_height);
-		// Create original image
-		$current_image = imagecreatefromjpeg($dir.$filename);
-		// resamling (actual cropping)
-		imagecopyresampled($new, $current_image, 0, 0, $x1, $y1, $crop_width, $crop_height, $w, $h);
-		// creating our new image
-		imagejpeg($new, $dir.$new_filename, 95);
+			// Create our small image
+			$new = imagecreatetruecolor($crop_width, $crop_height);
+			// Create original image
+			$current_image = imagecreatefromjpeg($dir.$filename);
+			// resamling (actual cropping)
+			imagecopyresampled($new, $current_image, 0, 0, $x1, $y1, $crop_width, $crop_height, $w, $h);
+			// creating our new image
+			imagejpeg($new, $dir.$new_filename, 75);
+		}
 	}
 }
-echo "<p> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$_GET['dirname']."\">Вернуться в родительский раздел</a>";
+echo "<p> <a href=\"".$_SERVER['PHP_SELF']."?action=edit\">Вернуться в родительский раздел</a>";
 ?>
 
 </div>

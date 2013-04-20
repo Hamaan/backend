@@ -1,0 +1,144 @@
+    {
+   "InfraSet": "Инфраструктура",
+   "Contents": [
+        {
+            "InfraID": 1,
+            "InfraName": "Бассейн"
+        },
+        {
+            "InfraID": 2,
+            "InfraName": "Детская площадка"
+        },
+        {
+            "InfraID": 3,
+            "InfraName": "Камера хранения"
+        },
+        {
+            "InfraID": 4,
+            "InfraName": "Пляж"
+        },
+        {
+            "InfraID": 5,
+            "InfraName": "Ж/д кассы"
+        },
+        {
+            "InfraID": 6,
+            "InfraName": "Авиакассы"
+        },
+        {
+            "InfraID": 7,
+            "InfraName": "Конференц-зал"
+        },
+        {
+            "InfraID": 8,
+            "InfraName": "Организация экскурсий"
+        },
+        {
+            "InfraID": 9,
+            "InfraName": "Парикмахерская"
+        },
+        {
+            "InfraID": 10,
+            "InfraName": "Проживание с животными"
+        },
+        {
+            "InfraID": 11,
+            "InfraName": "Питание  (организовано питание)"
+        },
+        {
+            "InfraID": 12,
+            "InfraName": "Парковка"
+        },
+        {
+            "InfraID": 13,
+            "InfraName": "Мед.кабинет"
+        },
+        {
+            "InfraID": 14,
+            "InfraName": "Прокат автомобилей"
+        },
+        {
+            "InfraID": 15,
+            "InfraName": "Прокат велосипедов"
+        },
+        {
+            "InfraID": 16,
+            "InfraName": "Бар/Ресторан"
+        },
+        {
+            "InfraID": 17,
+            "InfraName": "Услуги массажиста"
+        },
+        {
+            "InfraID": 18,
+            "InfraName": "Бильярд"
+        },
+        {
+            "InfraID": 19,
+            "InfraName": "Корт"
+        },
+        {
+            "InfraID": 20,
+            "InfraName": "Футбольное поле"
+        },
+        {
+            "InfraID": 21,
+            "InfraName": "Волейбол"
+        },
+        {
+            "InfraID": 22,
+            "InfraName": "Баскетбольная площадка"
+        },
+        {
+            "InfraID": 23,
+            "InfraName": "Гольф"
+        },
+        {
+            "InfraID": 24,
+            "InfraName": "Багги"
+        },
+        {
+            "InfraID": 25,
+            "InfraName": "Компьютер"
+        },
+        {
+            "InfraID": 26,
+            "InfraName": "Сауна"
+        },
+        {
+            "InfraID": 27,
+            "InfraName": "Солярий"
+        },
+        {
+            "InfraID": 27,
+            "InfraName": "Сейф"
+        },
+        {
+            "InfraID": 29,
+            "InfraName": "Тренажеры"
+        },
+        {
+            "InfraID": 30,
+            "InfraName": "Wi-Fi"
+        }
+    ]
+}
+
+       
+       
+       
+       
+       
+      
+    
+    
+    
+    
+    
+    
+       
+       
+    
+       
+    
+    

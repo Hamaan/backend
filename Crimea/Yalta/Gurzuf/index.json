@@ -1,14 +1,14 @@
 {
-   "DirName" : "",
+   "DirName" : "Гурзуф",
    "settings" : [
       {
-         "name" : "",
-         "nameEN" :"",
-         "url" : "",
+         "name" : "Гурзуф",
+         "nameEN" :"Gurzuf",
+         "url" : "Crimea/Yalta/Gurzuf/",
          "parent" : [
             {
-               "name": "",
-               "url" : ""
+               "name": "Ялта",
+               "url" : "Crimea/Yalta/"
             }
          ],
          "pics" : ""

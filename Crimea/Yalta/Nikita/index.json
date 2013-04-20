@@ -1,14 +1,14 @@
 {
-   "DirName" : "",
+   "DirName" : "Никита",
    "settings" : [
       {
-         "name" : "",
-         "nameEN" :"",
-         "url" : "",
+         "name" : "Никита",
+         "nameEN" :"Nikita",
+         "url" : "Crimea/Yalta/Nikita/",
          "parent" : [
             {
-               "name": "",
-               "url" : ""
+               "name": "Ялта",
+               "url" : "Crimea/Yalta/"
             }
          ],
          "pics" : ""

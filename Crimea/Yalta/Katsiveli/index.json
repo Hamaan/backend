@@ -1,0 +1,23 @@
+{
+   "DirName" : "Кацивели",
+   "settings" : [
+      {
+         "name" : "Кацивели",
+         "nameEN" :"Katsiveli",
+         "url" : "Crimea/Yalta/Katsiveli/",
+         "parent" : [
+            {
+               "name": "Ялта",
+               "url" : "Crimea/Yalta/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

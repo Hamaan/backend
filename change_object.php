@@ -96,21 +96,25 @@
 		}
 
 
-	echo "<br>\n</p>\n<p>\n<h3>Изменение информации об объекте \"".$LinksArray->settings[0]->name."\":</h3> <br>";
+	echo "<h2>Изменение информации об объекте \"".$LinksArray->settings[0]->name."\"</h2>";
 
 	echo "<form action=\"admin_index.php?action=add_object&change=true&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
 			<input type=\"hidden\" name=\"type\" value=\"hotel\">
 			<input type=\"hidden\" name=\"id\" value=\"".$_GET['object']."\">
 			<input type=\"hidden\" name=\"parenturl\" value=\"".$root_set[0]->parent[0]->url."\">
-			<small>ID ".$_GET['object']."</small>
-			<p>\n
-			<p>\n
+
+			<table width=\'100%\' class=\'tab\'>
+			<tr><td width=\'20%\'>
+			ID ".$_GET['object']."
+			</td><td></td></tr>
+			<tr><td width=\'20%\'>
+			Название
+			</td><td width=\'20%\'>
 			<input type=\"text\" name=\"Name\" value=\"".$LinksArray->settings[0]->name."\" size=\"25\" />
-			<small> Название</small>
-			</p>\n
-			<p>\n
+			</td></tr>
+			</table>
 			<input type=\"text\" name=\"location\" id=\"location\" value=\"".$LinksArray->settings[0]->location."\" size=\"25\" />
-			<small>Расположение  (например \"в центре города, недалеко от рынка\")</small>
+			<small>Расположение (например \"в центре города, недалеко от рынка\")</small>
 			</p>";
 
 			echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
@@ -167,7 +171,4 @@
 				<input name=\"picture[]\" type=\"file\" />
 			</p>\n
 			<p>\n
-				<input type=\"submit\" value=\"Отправить\">
-			</p>\n
-			</form>";
-?>
+				

@@ -1,6 +1,6 @@
 
 <div class="contents">
-	<h2>Изменение существующего объекта</h2> <br>
+	<!-- h2>Изменение существующего объекта</h2> <br -->
 	
 
 	<?php
@@ -61,30 +61,30 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 		$LinksArray = json_decode($JsonString);
 		$root_set = $LinksArray->settings;
 //формируем меню: текущее местоположение, список доступных директорий для перехода и, ниже, список отелей в данном населённом пункте.
-		echo "<p>\n";
-		echo "<small>Вы сейчас находитесь здесь:</small> <a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$LinksArray->settings[0]->parent[0]->url."\">".$LinksArray->settings[0]->parent[0]->name."</a> > ".$root_set[0]->name."<br>\n";
+		//echo "<p>\n";
+		echo "<h1><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$LinksArray->settings[0]->parent[0]->url."\">".$LinksArray->settings[0]->parent[0]->name."</a> > ".$root_set[0]->name."</h1>";
 
 		if (!$_GET['object'] and !$_GET['addtown'] and !$_GET['addhotel']) {
 			$id = 1;
-			echo "<table width=\"200\" border=\"0\" cellspacing=\"2\" cellpadding=\"2\">\n";
+			echo "<table class=\"tab\">\n";
 			//echo "<td>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$id."\" alt=\"Добавить новый населённый пункт\">+</a>\n</td>\n";
 			foreach ($LinksArray->data[0]->towns as $towns) {
-				echo "<tr>\n<td>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n</td>\n<td>Edit</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=town&id=".$towns->id."&dirname=".$dirname.$towns->url."\">Del</a>\n</td>\n</tr>\n";
+				echo "<tr>\n<td>\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$towns->url."\">".$towns->name."</a>\n</td>\n<td class=\'add\'>&#187;</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=town&id=".$towns->id."&dirname=".$dirname.$towns->url."\" class=\'add\'>Х</a>\n</td>\n</tr>\n";
 				$id = $towns->id + 1;
 			}
-			echo "<tr>\n<td  class=\"light\">\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$id."\" title=\"Добавить новый населённый пункт\">+</a>\n</td>\n</tr>\n";
+			echo "<tr>\n<td  class=\"light\">\n<a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addtown=".$id."\" title=\"+населенный пункт\">+населенный пункт</a>\n</td>\n</tr>\n";
 			echo "</table>\n";
 
 			$id = 1;
 			if ($dirname != "Crimea/") {
-				echo "<p>\n<small>Список отелей в данном населенном пункте:</small>\n<br>\n";
-				echo "<table border=\"0\" cellspacing=\"2\" cellpadding=\"2\">\n";
+				echo "<h2>Местные отели</h2>";
+				echo "<table class=\"tab\" border=\"0\" cellspacing=\"2\" cellpadding=\"2\">\n";
 				foreach ($LinksArray->data[0]->hotels as $hotels) {
-					echo "<tr>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a>\n</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&edit=true&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">Edit</a>\n</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=hotel&id=".$hotels->id."&dirname=".$dirname.$hotels->url."\">Del</a></td>\n<td>Загрузить/Изменить изображения</td></tr>\n";
+					echo "<tr>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">".$hotels->name."</a>\n</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=edit&edit=true&dirname=".$dirname.$hotels->url."&object=".$hotels->id."\">&#187;</a>\n</td>\n<td><a href=\"".$_SERVER['PHP_SELF']."?action=delete&type=hotel&id=".$hotels->id."&dirname=".$dirname.$hotels->url."\">Х</a></td>\n<td>Pic</td></tr>\n";
 					$id = $hotels->id + 1;
 				}
 			
-				echo "<tr>\n<td colspal=\"3\" class=\"light\"><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addhotel=".$id."\" title=\"Добавить новый отель\">+</a></td>\n</tr>\n";
+				echo "<tr>\n<td colspal=\"3\" class=\"light\"><a href=\"".$_SERVER['PHP_SELF']."?action=edit&dirname=".$dirname."&addhotel=".$id."\" title=\"Добавить новый отель\">+отель</a></td>\n</tr>\n";
 				echo "</p>\n";
 			}
 		}
@@ -188,12 +188,6 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 				<input name=\"picture[]\" type=\"file\" />
 			</p>\n
 			<p>\n
-				<input name=\"picture[]\" type=\"file\" />
-			</p>\n
-			<p>\n
-				<input name=\"picture[]\" type=\"file\" />
-			</p>\n
-			<p>\n
 				<input type=\"submit\" value=\"Отправить\">
 			</p>\n
 			</form>";
@@ -201,4 +195,4 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 
 	?>
 
-</div>
+</div>                                                                                                                                                                          

@@ -1,0 +1,23 @@
+{
+   "DirName" : "Массандра",
+   "settings" : [
+      {
+         "name" : "Массандра",
+         "nameEN" :"Massandra",
+         "url" : "Crimea/Yalta/Massandra/",
+         "parent" : [
+            {
+               "name": "Ялта",
+               "url" : "Crimea/Yalta/"
+            }
+         ],
+         "pics" : ""
+      }
+   ],
+   "data" : [
+      {
+         "towns" : [],
+         "hotels" : []
+      }
+   ]
+}

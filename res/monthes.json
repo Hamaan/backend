@@ -1,0 +1,57 @@
+{
+   "MonthSet": "Месяц",
+   "Contents": [
+         {
+            "MonthNumber": 1,
+            "MonthName": "Январь"
+         },
+         {
+            "MonthNumber": 2,
+            "MonthName": "Февраль"
+         },
+         {
+            "MonthNumber": 3,
+            "MonthName": "Март"
+         },
+         {
+            "MonthNumber": 4,
+            "MonthName": "Апрель"
+         },
+         {
+            "MonthNumber": 5,
+            "MonthName": "Май"
+         },
+         {
+            "MonthNumber": 6,
+            "MonthName": "Июнь"
+         },
+         {
+            "MonthNumber": 7,
+            "MonthName": "Июль"
+         },
+         {
+            "MonthNumber": 8,
+            "MonthName": "Август"
+         },
+         {
+            "MonthNumber": 9,
+            "MonthName": "Сентябрь"
+         },
+         {
+            "MonthNumber": 10,
+            "MonthName": "Октябрь"
+         },
+         {
+            "MonthNumber": 11,
+            "MonthName": "Ноябрь"
+         },
+         {
+            "MonthNumber": 12,
+            "MonthName": "Декабрь"
+         }
+   ]
+}
+
+
+
+

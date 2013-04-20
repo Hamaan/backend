@@ -1,8 +1,8 @@
 <?php
-	$user_agent = "DeadMorozzz";
-	if ( $_SERVER['HTTP_USER_AGENT'] != $user_agent ) {
-		die("Ooops...\n");
-	}
+//	$user_agent = "DeadMorozzz";
+//	if ( $_SERVER['HTTP_USER_AGENT'] != $user_agent ) {
+//		die("Ooops...\n");
+//	}
 	//if ( isset ($_GET)) { foreach ($_GET as $key=>$val) { $$key=$val; } } 
  	$action = $_GET['action'];
 
@@ -47,7 +47,7 @@
 
 	print "\n";
 
-	include ("menu.html");
+	// include ("menu.html");
 
 	print "\n";
 
@@ -74,5 +74,4 @@
     // вставляем низ странички
 	include ("end.html");
 
-?>
-
+?>
