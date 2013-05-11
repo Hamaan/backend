@@ -1,3 +1,11 @@
+<?php
+	if (!$_GET['action']) {
+		$top = implode ( "", file ( "top.html" ) ); 
+		print $top;
+		print "\n";
+	}
+?>
+
 <div class="contents">
 
 <?php  
@@ -411,7 +419,8 @@ else {
 		}
 	}
 }
-echo "<p> <a href=\"".$_SERVER['PHP_SELF']."?action=edit\">Вернуться в родительский раздел</a>";
+
+echo "<p> <a href=\"admin_index.php?action=edit&dirname=".$_POST['parent_dir']."\">Вернуться в родительский раздел</a>";
 ?>
 
 </div>
