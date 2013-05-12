@@ -123,7 +123,7 @@ function data_filling ($item_type, $post_item, $new_json_string){
 //Задание массива, определяющего размер обрезаемых изображений.
 $crop1 = array(640, 340);
 $crop2 = array(123, 85);
-$crop3 = array(640, 960);
+$crop3 = array(960, 640);
 $crop_array = array('crop1'=>$crop1, 'crop2'=>$crop2, 'crop3'=>$crop3);
 
 
