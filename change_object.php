@@ -1,5 +1,5 @@
 <?php
-	print_r($LinksArray);
+	//print_r($LinksArray);
 	$config_file = "Crimea/hotel_type.json";
 
 	function menu_change ($menu_type, $item_type, $file_name, $hint) 
@@ -165,10 +165,8 @@
 				<input name=\"picture[]\" type=\"file\" />
 			</p>\n
 			<p>\n
-				<input name=\"picture[]\" type=\"file\" />
+				<input type=\"submit\" value=\"Отправить\">
 			</p>\n
-			<p>\n
-				<input name=\"picture[]\" type=\"file\" />
-			</p>\n
-			<p>\n
+			</form>";
+?>
 				

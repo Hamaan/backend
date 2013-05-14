@@ -1,7 +1,11 @@
 <?php
 	if (!$_GET['action']) {
-		$top = implode ( "", file ( "top.html" ) ); 
-		print $top;
+		//$top = implode ( "", file ( "top.html" ) ); 
+		//print $top;
+		echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
+		echo "<HTML>";
+		echo "<HEAD>";
+		echo "<META HTTP-EQUIV=\"REFRESH\" CONTENT=\"0;URL=admin_index.php?action=edit&dirname=".$_POST['parent_dir']."\">";
 		print "\n";
 	}
 ?>
@@ -39,7 +43,7 @@ function translit($str){
 function dir_create ($dir_path){
 	if (!is_dir($dir_path)) {
 		mkdir("$dir_path");
-		echo "Директория ".$dir_path." создана успешно <br>\n";
+		//echo "Директория ".$dir_path." создана успешно <br>\n";
 	}
 	else {
 		echo "Директория ".$dir_path." существует, ничего создавать не нужно. <br>\n";
@@ -175,7 +179,7 @@ else {
 		$index_file = fopen($_GET['dirname']."index.json", 'w');
 		fwrite($index_file, $index_array);
 		fclose($index_file);
-		echo "Запись в индексный файл внесена успешно <br>\n";
+		//echo "Запись в индексный файл внесена успешно <br>\n";
 
 	
 # Открываем файл-шаблон JSON.
@@ -194,7 +198,12 @@ else {
 		fwrite($new_index_file, $new_json);
 		fclose($new_index_file);
 
-		echo "Новый объект создан успешно.";
+		echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">";
+		echo "<HTML>";
+		echo "<HEAD>";
+		echo "<META HTTP-EQUIV=\"REFRESH\" CONTENT=\"0;URL=admin_index.php?action=edit&dirname=".$_GET['dirname']."\">";
+		print "\n";
+		//echo "Новый объект создан успешно.";
 
 	}
 
@@ -273,7 +282,7 @@ else {
 	
 
 # Обработка загруженных изображений.	
-		$types = array('image/gif', 'image/png', 'image/jpeg');
+		$types = array('image/gif', 'image/png', 'image/jpeg', 'image/pjpeg', 'image/x-png');
 		$max_file_size = 153600000;
 		$tmp_path = "res/";
 
@@ -420,7 +429,7 @@ else {
 	}
 }
 
-echo "<p> <a href=\"admin_index.php?action=edit&dirname=".$_POST['parent_dir']."\">Вернуться в родительский раздел</a>";
+//echo "<p> <a href=\"admin_index.php?action=edit&dirname=".$_POST['parent_dir']."\">Вернуться в родительский раздел</a>";
 ?>
 
 </div>

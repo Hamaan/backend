@@ -110,7 +110,7 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			$addtown = $_GET['addtown'];
 			echo "<br>\n</p>\n
 			<p>\n<small>Добавление нового населенного пункта:</small> <br>
-			<form action=\"admin_index.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
+			<form action=\"add_object.php?action=add_object&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_town\">
 			<input type=\"text\" name=\"type\" value=\"town\" hidden size=\"1\">
 			<input type=\"text\" name=\"id\" value=\"".$addtown."\" hidden size=\"2\">
 			<small>ID: ".$addtown."</small>
