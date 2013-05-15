@@ -131,10 +131,11 @@ $crop3 = array(960, 640);
 $crop_array = array('crop1'=>$crop1, 'crop2'=>$crop2, 'crop3'=>$crop3);
 
 
-
+// Изменение существующей записи.
 if ($_GET['change'] == "true") {
 	if ($_POST['type'] == "hotel") {
-		$json_index_string = file_get_contents($_POST['parenturl']."index.json");
+		# Меняем название в индексном файле родительской директории.
+		$json_index_string = file_get_contents($_POST['parent_dir']."index.json");
 		$index_array = json_decode($json_index_string);
 		$name_en = translit($_POST['Name']); # Переводим введённое название на латиницу.
 		//print_r($index_array);
@@ -144,11 +145,46 @@ if ($_GET['change'] == "true") {
 			}
 		}
 		$index_array = json_encode($index_array);
-		$index_file = fopen($_POST['parenturl']."index.json", 'w');
+		$index_file = fopen($_POST['parent_dir']."index.json", 'w');
 		fwrite($index_file, $index_array);
 		fclose($index_file);
-		echo "Запись в индексном файле изменена успешно <br>\n";
+		//echo "Запись в индексном файле изменена успешно <br>\n";
+		//print_r($_POST);
+		
+		# вносим изменения в индексный файл объекта.
+		$json_reedit_string = file_get_contents($_GET['dirname']."index.json");
+		$edit_json = json_decode($json_reedit_string);
+		$edit_json->DirName = $_POST['Name'];
+		$edit_json->settings[0]->name = $_POST['Name'];
+		$edit_json->settings[0]->nameEN = $name_en;
+		$edit_json->settings[0]->location = $_POST['location'];
+		$edit_json->settings[0]->address = $_POST['address'];
+		$edit_json->settings[0]->email = $_POST['email'];
+		$edit_json->settings[0]->phone = $_POST['phone'];
+		$edit_json->settings[0]->skype = $_POST['skype'];
+		$edit_json->settings[0]->homepage = $_POST['homepage'];
+		$edit_json->settings[0]->gps = $_POST['gps'];
+		$edit_json->settings[0]->comment = $_POST['comment'];
+		data_filling ("hotel_type", $_POST['hotel_type'], $edit_json->data[0]->hotel_type);
+		$edit_json->data[0]->hotel_type = $new_type;
+		data_filling ("beach_type", $_POST['beach_type'], $edit_json->data[0]->beach_type);
+		$edit_json->data[0]->beach_type = $new_type;
+		data_filling ("room_type", $_POST['room_type'], $edit_json->data[0]->room_type);
+		$edit_json->data[0]->room_type = $new_type;
+		data_filling ("meal_type", $_POST['meal_type'], $edit_json->data[0]->meal_type);
+		$edit_json->data[0]->meal_type = $new_type;
+		data_filling ("infra_type", $_POST['infra_type'], $edit_json->data[0]->infra_type);
+		$edit_json->data[0]->infra_type = $new_type;
+		data_filling ("month", $_POST['month'], $edit_json->data[0]->month);
+		$edit_json->data[0]->month = $new_type;
 
+		$edit_json = json_encode($edit_json);
+		$edited_file = fopen($_GET['dirname']."index.json", 'w');
+		fwrite($edited_file, $edit_json);
+		fclose($edited_file);
+		
+		//echo "Отредактированные данные: <br>\n";
+		//print_r($edit_json);	
 
 	}
 	//echo "<p> Bingo!!!\n<br>";

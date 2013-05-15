@@ -1,5 +1,5 @@
 <?php
-	print_r($LinksArray);
+	//print_r($LinksArray);
 	$config_file = "Crimea/hotel_type.json";
 
 	function menu_change ($menu_type, $item_type, $file_name, $hint) 
@@ -95,17 +95,13 @@
 						
 		}
 
-if ($_GET['change'] == "true") {
-	print_r($_POST);
-	print_r($_GET);
-}
-else {
+
 	echo "<h2>Изменение информации об объекте \"".$LinksArray->settings[0]->name."\"</h2>";
 
-	echo "<form action=\"change_object.php?action=add_object&change=true&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
+	echo "<form action=\"add_object.php?change=true&dirname=".$dirname."&parentname=".$root_set[0]->name."\" enctype=\"multipart/form-data\" method=\"post\" name=\"new_hotel\">
 			<input type=\"hidden\" name=\"type\" value=\"hotel\">
 			<input type=\"hidden\" name=\"id\" value=\"".$_GET['object']."\">
-			<input type=\"hidden\" name=\"parenturl\" value=\"".$root_set[0]->parent[0]->url."\">
+			<input type=\"hidden\" name=\"parent_dir\" value=\"".$root_set[0]->parent[0]->url."\">
 
 			<table width=\'100%\' class=\'tab\'>
 			<tr><td width=\'20%\'>
@@ -174,7 +170,6 @@ else {
 				<input type=\"submit\" value=\"Отправить\">
 			</p>\n
 			</form>";
-}
 
 ?>
 				
