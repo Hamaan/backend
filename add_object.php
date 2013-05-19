@@ -425,7 +425,7 @@ else {
 		$new_index_file = fopen($new_dir_path."index.json", 'x');
 		fwrite($new_index_file, $new_json);
 		fclose($new_index_file);
-		echo "Новый объект создан успешно.";
+		//echo "Новый объект создан успешно.";
 	}
 	foreach ($crop_array as $key => $value) {
 		if (isset($_POST[$key])) {

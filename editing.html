@@ -19,8 +19,22 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 			switch ($menu_type) {
 				case "rollout" :
 					echo "<p>\n<select name=\"$item_type".'[]'."\" id=\"$item_type\" size=\"1\">\n<option value='0'>...</option>\n";
-					foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
-						echo "<option value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
+					if (is_numeric($hint)) {
+						$i = 1;
+						foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
+							if ($i == $hint) {
+								echo "<option selected value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
+							}
+							else {
+								echo "<option value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
+							}
+							$i++;
+						}
+					}
+					else {
+						foreach ($menu_array->data[0]->$item_type as $menu_item_type) {
+							echo "<option value='".$menu_item_type->id."'>".$menu_item_type->name."</option>\n";
+						}
 					}
 					echo "</select>\n";
 					break;
@@ -147,10 +161,10 @@ function menu_create ($menu_type, $item_type, $file_name, $hint)
 
 			echo "<small> Период работы.</small><br>\n<small>C:</small>\n";
 			$item_id = "start";
-			menu_create ("rollout","month", $config_file, "0");
+			menu_create ("rollout","month", $config_file, "1");
 			echo "<small>По:</small>\n";
 			$item_id = "end";
-			menu_create ("rollout","month", $config_file, "0");
+			menu_create ("rollout","month", $config_file, "12");
 			menu_create ("rollout","hotel_type", $config_file, "Тип отеля");
 			echo "<small>Классы номеров (выбрать всё, что подходит):</small>\n";
 			menu_create ("checkbox","room_type", $config_file, "0");
